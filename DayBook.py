@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import datetime
 import configparser
 
 from PyQt5.QtWidgets import QMainWindow, QShortcut, QTextEdit, QVBoxLayout, QWidget, QApplication, QDesktopWidget
@@ -32,6 +33,7 @@ def check_file_config():
 
         config.add_section("OTHER")
         config.set("OTHER", "path_save_daybook", os.path.abspath(os.curdir))  # Путь хранения записей дневника
+        config.set("OTHER", "days_of", str(datetime.datetime.now().date()))  # Дата начала ведения дневника
 
         with open(FILE_CONFIG, "w") as config_file:
             config.write(config_file)
@@ -48,7 +50,7 @@ class AppStart(QMainWindow):
         self.setGeometry(self.indent_width, 50, 800, 800)
 
         self.start_day = StartDay(file_config=FILE_CONFIG, parent=self)
-        self.gui_settings = AppGuiSettings(file_config=FILE_CONFIG)  # Окно настроек
+        self.gui_settings = AppGuiSettings(parent=self, file_config=FILE_CONFIG)  # Окно настроек
         self.gui_about = AppGuiAbout(parent=self)  # Окно о программе
 
         # Горячие клавиши
@@ -77,6 +79,7 @@ class AppStart(QMainWindow):
 
 
 if __name__ == "__main__":
+
     check_file_config()  # Проверяем наличия файла конфигурации.
 
     app = QApplication([])

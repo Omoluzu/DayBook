@@ -7,7 +7,7 @@ import configparser
 
 from PyQt5.QtWidgets import QFileDialog, QWidget, QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton, QLabel, QCalendarWidget
 
-VERSION = "2.0.10"
+VERSION = "2.0.11"
 
 
 def create_option_config(file_config, section, option, key):

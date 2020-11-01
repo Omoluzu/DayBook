@@ -83,7 +83,7 @@ class StartDay:
 
         self.current_date = datetime.datetime.now()  # Текущее время
 
-        self.path_daybook = self.get_path_save()
+        self.path_daybook = self.get_path_save()  # Получение полного пути сохраняемого файла
         self.name_file_day = f"day_{self.current_date.strftime('%Y-%m-%d')}.html"
         self.path_day = os.path.join(self.path_daybook, self.name_file_day)
 
@@ -125,7 +125,8 @@ class StartDay:
             month = DICT_MONTH[self.current_date.month]['welcome']
             year = str(self.current_date.year)
             weekday = DICT_WEEKDAY[self.current_date.weekday()]
-            return f"{day} {month} {year} - ({weekday})"
+            days_of = (datetime.datetime.now() - datetime.datetime.strptime(self.config.get("OTHER", "days_of"), "%Y-%m-%d"))
+            return f"{day} {month} {year} - ({weekday}) - Дней ведения дневника: {days_of.days}"
 
     def save(self):
         """ Сохранение записей дневника """

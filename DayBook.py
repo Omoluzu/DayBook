@@ -6,7 +6,7 @@ import datetime
 import configparser
 
 from PyQt5.QtWidgets import QMainWindow, QShortcut, QTextEdit, QVBoxLayout, QWidget, QApplication, QDesktopWidget
-from PyQt5.QtGui import QKeySequence
+from PyQt5.QtGui import QKeySequence, QFont
 from pathlib import Path
 
 from modules.TextDay import StartDay
@@ -16,7 +16,7 @@ from modules.GuiMenuBar import AppMenuBar
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
 
-if os.path.isfile("history.txt"):  # Для удобства разработка, чтобы конфигурационный файл был отдельно
+if os.path.isfile("history.md"):  # Для удобства разработка, чтобы конфигурационный файл был отдельно
     FILE_CONFIG = "settings.ini"
 
 
@@ -57,10 +57,14 @@ class AppStart(QMainWindow):
         self.key_ctrl_s = QShortcut(QKeySequence('Ctrl+S'), self)
         self.key_ctrl_s.activated.connect(self.start_day.save)
 
+        self.font = QFont()
+        self.font.setPointSize(14)
+
         # Основная запись дневника
         self.text = QTextEdit()
         self.text.setHtml(self.start_day.start())
         self.text.setReadOnly(True) if self.start_day.check_read else self.text.setReadOnly(False)
+        self.text.setFont(self.font)
 
         # Layout
         self.layout = QVBoxLayout()

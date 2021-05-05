@@ -34,6 +34,8 @@ def check_file_config():
         config.add_section("OTHER")
         config.set("OTHER", "path_save_daybook", os.path.abspath(os.curdir))  # Путь хранения записей дневника
         config.set("OTHER", "days_of", str(datetime.datetime.now().date()))  # Дата начала ведения дневника
+        config.add_section("TEXT")
+        config.set("TEXT", "size", str(datetime.datetime.now().date()))  # Размер шрифта
 
         with open(FILE_CONFIG, "w") as config_file:
             config.write(config_file)
@@ -43,6 +45,9 @@ def check_file_config():
 class AppStart(QMainWindow):
     def __init__(self):
         super().__init__()
+
+        self.config = configparser.ConfigParser()
+        self.config.read(FILE_CONFIG)
 
         self.size_window = QDesktopWidget().screenGeometry()  # Получение разрешение экрана
         self.indent_width = int((self.size_window.width() / 2) - 400)  # Отступ по ширине
@@ -58,7 +63,7 @@ class AppStart(QMainWindow):
         self.key_ctrl_s.activated.connect(self.start_day.save)
 
         self.font = QFont()
-        self.font.setPointSize(14)
+        self.font.setPointSize(self.config.getint("TEXT", "size"))
 
         # Основная запись дневника
         self.text = QTextEdit()

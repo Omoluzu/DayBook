@@ -7,7 +7,7 @@ import configparser
 
 from PyQt5.QtWidgets import QFileDialog, QWidget, QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton, QLabel, QCalendarWidget
 
-VERSION = "2.0.11"
+VERSION = "2.0.14"
 
 
 def create_option_config(file_config, section, option, key):
@@ -124,11 +124,11 @@ class AppGuiSettings(QWidget):
         self.btn_path_save.clicked.connect(self.selected_path_save_directory)
         self.h1_layout.addWidget(self.btn_path_save)
 
-        self.h2_layot = QHBoxLayout()
-        self.layout.addLayout(self.h2_layot)
+        self.h2_layout = QHBoxLayout()
+        self.layout.addLayout(self.h2_layout)
 
         self.label_days_of = QLabel("Старт начала ведения дневника: ")
-        self.h2_layot.addWidget(self.label_days_of)
+        self.h2_layout.addWidget(self.label_days_of)
 
         if not self.config.has_option("OTHER", "days_of"):
             create_option_config(file_config, "OTHER", "days_of", str(datetime.datetime.now().date()))
@@ -136,11 +136,21 @@ class AppGuiSettings(QWidget):
 
         self.text_days_of = QLineEdit()
         self.text_days_of.setText(self.config.get("OTHER", "days_of"))
-        self.h2_layot.addWidget(self.text_days_of)
+        self.h2_layout.addWidget(self.text_days_of)
 
         self.btn_days_of = QPushButton('Выбрать дату')
         self.btn_days_of.clicked.connect(self.selected_day_of)
-        self.h2_layot.addWidget(self.btn_days_of)
+        self.h2_layout.addWidget(self.btn_days_of)
+
+        self.h3_layout = QHBoxLayout()
+        self.layout.addLayout(self.h3_layout)
+
+        self.label_size_text = QLabel("Размер шрифта: ")
+        self.h3_layout.addWidget(self.label_size_text)
+
+        self.text_size_text = QLineEdit()
+        self.h3_layout.addWidget(self.text_size_text)
+        self.text_size_text.setText(self.config.get("TEXT", "size"))
 
         self.button_save_settings = QPushButton("Сохранить", self)
         self.button_save_settings.clicked.connect(self.save_settings)
@@ -161,6 +171,7 @@ class AppGuiSettings(QWidget):
 
         self.config.set("OTHER", "path_save_daybook", self.text_path_save.text())
         self.config.set("OTHER", "days_of", self.text_days_of.text())
+        self.config.set("TEXT", "size", self.text_size_text.text())
 
         with open(self.file_config, "w") as config_file:
             self.config.write(config_file)

@@ -13,6 +13,8 @@ from modules.TextDay import StartDay
 from modules.GuiSettings import AppGuiSettings, AppGuiAbout
 from modules.GuiMenuBar import AppMenuBar
 
+VERSION = "2.0.14"
+
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
 
@@ -45,6 +47,8 @@ def check_file_config():
 class AppStart(QMainWindow):
     def __init__(self):
         super().__init__()
+
+        self.setWindowTitle(f"DayBook {VERSION}")
 
         self.config = configparser.ConfigParser()
         self.config.read(FILE_CONFIG)

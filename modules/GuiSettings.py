@@ -7,8 +7,6 @@ import configparser
 
 from PyQt5.QtWidgets import QFileDialog, QWidget, QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton, QLabel, QCalendarWidget
 
-VERSION = "2.0.14"
-
 
 def create_option_config(file_config, section, option, key):
     """ Обновление """
@@ -72,6 +70,8 @@ class AppGuiAbout(QWidget):
 
     def __init__(self, parent):
         super().__init__()
+
+        from DayBook import VERSION
 
         self.parent = parent
 

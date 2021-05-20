@@ -132,4 +132,4 @@ class StartDay:
         """ Сохранение записей дневника """
         if not self.check_read:
             with open(self.path_day, "w", encoding="utf-8") as to_html:
-                to_html.write(self.parent.text.toHtml())
+                to_html.write(self.parent.day_book.text.toHtml())

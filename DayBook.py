@@ -14,7 +14,7 @@ from modules.GuiSettings import AppGuiSettings, AppGuiAbout
 from modules.GuiMenuBar import AppMenuBar
 from UI import *
 
-VERSION = "2.1.1"
+VERSION = "2.1.2"
 
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
@@ -67,21 +67,14 @@ class AppStart(QMainWindow):
         self.key_ctrl_s = QShortcut(QKeySequence('Ctrl+S'), self)
         self.key_ctrl_s.activated.connect(self.start_day.save)
 
-        self.font = QFont()
-        self.font.setPointSize(self.config.getint("TEXT", "size"))
-
-        # Основная запись дневника
-        self.text = QTextEdit()
-        self.text.setHtml(self.start_day.start())
-        self.text.setReadOnly(True) if self.start_day.check_read else self.text.setReadOnly(False)
-        self.text.setFont(self.font)
-
+        # Виджеты ТабВиджетов
+        self.day_book = DayBookWidget(parent=self)
         self.task = TaskWidget()
 
         # ТабВиджет
         self.t_bar = QTabWidget()
         self.t_bar.setTabPosition(QTabWidget.West)
-        self.t_bar.addTab(self.text, "Дневник")
+        self.t_bar.addTab(self.day_book, "Дневник")
         self.t_bar.addTab(self.task, "Задачи")
 
         # Layout

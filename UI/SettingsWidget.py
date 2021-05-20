@@ -66,32 +66,6 @@ class OpenFile(QFileDialog):
         self.path_directory = os.path.normpath(self.path_directory)
 
 
-class AppGuiAbout(QWidget):
-
-    def __init__(self, parent):
-        super().__init__()
-
-        from DayBook import VERSION
-
-        self.parent = parent
-
-        self.setWindowTitle("О программе")
-        self.setGeometry(600, 200, 350, 100)
-
-        self.layout = QVBoxLayout()
-
-        self.label_name_project = QLabel("ДНЕВНИК")
-        self.layout.addWidget(self.label_name_project)
-
-        self.label_version = QLabel(f'Версия программы: {VERSION}')
-        self.layout.addWidget(self.label_version)
-
-        self.label_copyright = QLabel("Copyright: \xa9 2020 Волков Алексей")
-        self.layout.addWidget(self.label_copyright)
-
-        self.setLayout(self.layout)
-
-
 class SettingsWidget(QWidget):
 
     def __init__(self, parent, file_config):

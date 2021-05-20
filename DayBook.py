@@ -13,7 +13,7 @@ from modules.TextDay import StartDay
 from modules.GuiMenuBar import AppMenuBar
 from UI import *
 
-VERSION = "2.1.3"
+VERSION = "2.1.4"
 
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
@@ -60,7 +60,7 @@ class AppStart(QMainWindow):
 
         self.start_day = StartDay(file_config=FILE_CONFIG, parent=self)
         self.gui_settings = SettingsWidget(parent=self, file_config=FILE_CONFIG)  # Окно настроек
-        self.gui_about = AppGuiAbout(parent=self)  # Окно о программе
+        self.gui_about = AboutWidget(parent=self)  # Окно о программе
 
         # Горячие клавиши
         self.key_ctrl_s = QShortcut(QKeySequence('Ctrl+S'), self)

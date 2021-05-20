@@ -92,7 +92,7 @@ class AppGuiAbout(QWidget):
         self.setLayout(self.layout)
 
 
-class AppGuiSettings(QWidget):
+class SettingsWidget(QWidget):
 
     def __init__(self, parent, file_config):
         super().__init__()

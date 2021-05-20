@@ -6,15 +6,14 @@ import datetime
 import configparser
 
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QKeySequence, QFont
+from PyQt5.QtGui import QKeySequence
 from pathlib import Path
 
 from modules.TextDay import StartDay
-from modules.GuiSettings import AppGuiSettings, AppGuiAbout
 from modules.GuiMenuBar import AppMenuBar
 from UI import *
 
-VERSION = "2.1.2"
+VERSION = "2.1.3"
 
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
@@ -60,7 +59,7 @@ class AppStart(QMainWindow):
         self.setGeometry(self.indent_width, 50, 800, 800)
 
         self.start_day = StartDay(file_config=FILE_CONFIG, parent=self)
-        self.gui_settings = AppGuiSettings(parent=self, file_config=FILE_CONFIG)  # Окно настроек
+        self.gui_settings = SettingsWidget(parent=self, file_config=FILE_CONFIG)  # Окно настроек
         self.gui_about = AppGuiAbout(parent=self)  # Окно о программе
 
         # Горячие клавиши

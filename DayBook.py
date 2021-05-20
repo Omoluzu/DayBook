@@ -5,15 +5,16 @@ import os
 import datetime
 import configparser
 
-from PyQt5.QtWidgets import QMainWindow, QShortcut, QTextEdit, QVBoxLayout, QWidget, QApplication, QDesktopWidget
+from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QKeySequence, QFont
 from pathlib import Path
 
 from modules.TextDay import StartDay
 from modules.GuiSettings import AppGuiSettings, AppGuiAbout
 from modules.GuiMenuBar import AppMenuBar
+from UI import *
 
-VERSION = "2.0.14"
+VERSION = "2.1.1"
 
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
@@ -75,9 +76,17 @@ class AppStart(QMainWindow):
         self.text.setReadOnly(True) if self.start_day.check_read else self.text.setReadOnly(False)
         self.text.setFont(self.font)
 
+        self.task = TaskWidget()
+
+        # ТабВиджет
+        self.t_bar = QTabWidget()
+        self.t_bar.setTabPosition(QTabWidget.West)
+        self.t_bar.addTab(self.text, "Дневник")
+        self.t_bar.addTab(self.task, "Задачи")
+
         # Layout
-        self.layout = QVBoxLayout()
-        self.layout.addWidget(self.text)
+        self.layout = QHBoxLayout()
+        self.layout.addWidget(self.t_bar)
 
         # Widget
         self.widget = QWidget()

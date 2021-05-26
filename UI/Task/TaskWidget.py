@@ -1,10 +1,14 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+
+Виджет вывода списка всех задач
+
+"""
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-
-import UI
 
 
 class Task(QWidget):
@@ -47,37 +51,21 @@ class TaskWidget(QWidget):
         p.setColor(self.backgroundRole(), Qt.green)
         self.setPalette(p)
 
-        self.layout = QVBoxLayout()
+        self.space = QSpacerItem(150, 10, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
+        self.layout = QVBoxLayout()
         self.setLayout(self.layout)
+
+        self.layout.addItem(self.space)
 
     def create_task(self, name_task):
         """
         Создание новой задачи.
         """
+
+        self.layout.removeItem(self.space)
+
         task = Task(name_task=name_task)
         self.layout.addWidget(task)
 
-
-class TaskBar(QWidget):
-
-    def __init__(self):
-        super().__init__()
-
-        self.layout = QVBoxLayout()
-
-        self.task = TaskWidget()
-
-        self.create_task = QPushButton("Создать задачу")
-        self.create_task.clicked.connect(self.action_create_task)
-
-        self.layout.addWidget(self.task)
-        self.layout.addWidget(self.create_task)
-
-        self.setLayout(self.layout)
-
-    def action_create_task(self):
-        """ Создание новой задачи """
-
-        create_task = UI.CreateTaskDialog(parent=self)
-        create_task.exec_()
+        self.layout.addItem(self.space)

@@ -13,7 +13,7 @@ from modules.TextDay import StartDay
 from modules.GuiMenuBar import AppMenuBar
 from UI import *
 
-VERSION = "2.1.4"
+VERSION = "2.1.5"
 
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
@@ -68,7 +68,7 @@ class AppStart(QMainWindow):
 
         # Виджеты ТабВиджетов
         self.day_book = DayBookWidget(parent=self)
-        self.task = TaskWidget()
+        self.task = TaskBar()
 
         # ТабВиджет
         self.t_bar = QTabWidget()

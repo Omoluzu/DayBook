@@ -10,31 +10,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 
-
-class Task(QWidget):
-    """
-    Виджет задачи
-    """
-
-    def __init__(self, name_task):
-        super().__init__()
-
-        self.name_task = name_task
-
-        self.setAutoFillBackground(True)
-
-        p = self.palette()
-        p.setColor(self.backgroundRole(), Qt.red)
-        self.setPalette(p)
-
-        self.setFixedHeight(50)
-
-        self.layout = QHBoxLayout()
-
-        text = QLabel(self.name_task)
-        self.layout.addWidget(text)
-
-        self.setLayout(self.layout)
+import UI
 
 
 class TaskWidget(QWidget):
@@ -65,7 +41,7 @@ class TaskWidget(QWidget):
 
         self.layout.removeItem(self.space)
 
-        task = Task(name_task=name_task)
+        task = UI.Task(name_task=name_task)
         self.layout.addWidget(task)
 
         self.layout.addItem(self.space)

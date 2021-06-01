@@ -10,10 +10,11 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 
+import modules
 import UI
 
 
-class TaskWidget(QWidget):
+class TaskWidget(QWidget, modules.ORM):
     """
     Виджет вывода списка всех задач
     """
@@ -45,3 +46,8 @@ class TaskWidget(QWidget):
         self.layout.addWidget(task)
 
         self.layout.addItem(self.space)
+
+        self.databases.add(modules.Task(
+            task_name=name_task,
+        ))
+        self.databases.commit()

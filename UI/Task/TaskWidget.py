@@ -18,6 +18,8 @@ class TaskWidget(QWidget, modules.ORM):
     """
     Виджет вывода списка всех задач
     """
+    space: QSpacerItem  # Выравниватель задач сверху
+    layout: QVBoxLayout  # Основно лайоут для задач
 
     def __init__(self):
         super().__init__()
@@ -33,11 +35,20 @@ class TaskWidget(QWidget, modules.ORM):
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
 
+        for task in self.databases.query(modules.Task).all():
+            self.layout.addWidget(UI.Task(name_task=task.task_name))
+
         self.layout.addItem(self.space)
 
     def create_task(self, name_task):
         """
         Создание новой задачи.
+
+        создание и удаление space происходит ради того что когда добавлюятся новые задачи,
+        они добавляются ниже space и их отображение становится не корректным
+
+        При создании задачи происходит добавление нового виджета задачи и
+        запись задачи в базу данных
         """
 
         self.layout.removeItem(self.space)

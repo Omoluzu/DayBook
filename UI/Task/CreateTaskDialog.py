@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-
 Диалог добавления новой задачи.
-
 """
 
 from PyQt5.QtWidgets import *

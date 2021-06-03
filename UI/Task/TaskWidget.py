@@ -36,7 +36,7 @@ class TaskWidget(QWidget, modules.ORM):
         self.setLayout(self.layout)
 
         for task in self.databases.query(modules.Task).all():
-            self.layout.addWidget(UI.Task(name_task=task.task_name))
+            self.layout.addWidget(UI.Task(id_task=task.id, name_task=task.task_name))
 
         self.layout.addItem(self.space)
 
@@ -51,14 +51,21 @@ class TaskWidget(QWidget, modules.ORM):
         запись задачи в базу данных
         """
 
-        self.layout.removeItem(self.space)
-
-        task = UI.Task(name_task=name_task)
-        self.layout.addWidget(task)
-
-        self.layout.addItem(self.space)
-
+        # Добавление задачи в БД
         self.databases.add(modules.Task(
             task_name=name_task,
         ))
         self.databases.commit()
+
+        # Получение последнего ИД (решения вопроса с получение ИД задачи)
+        last_id_task = self.databases.query(modules.Task).order_by(modules.Task.id.desc()).first()
+
+        # Удаляем space
+        self.layout.removeItem(self.space)
+
+        # Создаем виджет задачи и добавлего для отображения
+        task = UI.Task(id_task=last_id_task, name_task=name_task)
+        self.layout.addWidget(task)
+
+        # Добавляем space
+        self.layout.addItem(self.space)

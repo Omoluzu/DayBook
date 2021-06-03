@@ -13,10 +13,13 @@ class Task(QWidget):
     """
     Виджет задачи
     """
+    id_task: int  # ID задачи
+    name_task: str  # Название задачи
 
-    def __init__(self, name_task):
+    def __init__(self, id_task, name_task):
         super().__init__()
 
+        self.id_task = id_task
         self.name_task = name_task
 
         self.setAutoFillBackground(True)

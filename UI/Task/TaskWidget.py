@@ -64,7 +64,7 @@ class TaskWidget(QWidget, modules.ORM):
         self.layout.removeItem(self.space)
 
         # Создаем виджет задачи и добавлего для отображения
-        task = UI.Task(id_task=last_id_task, name_task=name_task)
+        task = UI.Task(id_task=last_id_task.id, name_task=name_task)
         self.layout.addWidget(task)
 
         # Добавляем space

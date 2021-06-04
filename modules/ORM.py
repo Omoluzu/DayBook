@@ -28,9 +28,10 @@ class ORM:
 
     def __init__(self):
 
-        _engine = create_engine('sqlite:///sqlalchemy.db')
+        if not ORM.databases:
+            _engine = create_engine('sqlite:///sqlalchemy.db')
 
-        # _engine = create_engine(URL(**settings.DATABASE))
-        DeclarativeBase.metadata.create_all(_engine)
-        _Session = sessionmaker(bind=_engine)
-        ORM.databases = _Session()
+            # _engine = create_engine(URL(**settings.DATABASE))
+            DeclarativeBase.metadata.create_all(_engine)
+            _Session = sessionmaker(bind=_engine)
+            ORM.databases = _Session()

@@ -13,7 +13,7 @@ from modules.TextDay import StartDay
 from modules.GuiMenuBar import AppMenuBar
 from UI import *
 
-VERSION = "2.1.11"
+VERSION = "2.1.12"
 
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")

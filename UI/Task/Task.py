@@ -9,6 +9,7 @@ import datetime
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
 import modules
 
@@ -38,7 +39,7 @@ class Task(QWidget, modules.ORM):
 
         layout = QHBoxLayout()
 
-        self.label_name_task = QLabel(self.name_task)
+        self.label_name_task = NameTask(self.name_task)
         layout.addWidget(self.label_name_task)
 
         btn_close_task = QPushButton("Close")
@@ -60,3 +61,15 @@ class Task(QWidget, modules.ORM):
         self.databases.commit()  # Сохраняем информацию в БД
 
         self.close()  # Закрываем виджет с задачей
+
+
+class NameTask(QLabel):
+
+    def __init__(self, text):
+        super().__init__(text)
+
+        font = QFont()
+        font.setPointSize(24)
+        font.setFamily("Gabriola")
+        self.setFont(font)
+

@@ -5,6 +5,8 @@
 Виджет непосредственно самой задачи
 """
 
+import datetime
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 
@@ -54,6 +56,7 @@ class Task(QWidget, modules.ORM):
         """
 
         self.db.completed = True  # Помечаем в БД что задача выполнена
+        self.db.date_completed = datetime.datetime.now()  # Сохраняем время выполнения задачи
         self.databases.commit()  # Сохраняем информацию в БД
 
         self.close()  # Закрываем виджет с задачей

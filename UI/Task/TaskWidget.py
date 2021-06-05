@@ -7,6 +7,8 @@
 
 """
 
+import datetime
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 
@@ -55,6 +57,7 @@ class TaskWidget(QWidget, modules.ORM):
         # Добавление задачи в БД
         self.databases.add(modules.Task(
             task_name=name_task,
+            date_created=datetime.datetime.now()
         ))
         self.databases.commit()
 

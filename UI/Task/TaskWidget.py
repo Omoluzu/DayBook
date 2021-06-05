@@ -36,7 +36,8 @@ class TaskWidget(QWidget, modules.ORM):
         self.setLayout(self.layout)
 
         for task in self.databases.query(modules.Task).all():
-            self.layout.addWidget(UI.Task(id_task=task.id, name_task=task.task_name))
+            if not task.completed:
+                self.layout.addWidget(UI.Task(id_task=task.id, name_task=task.task_name))
 
         self.layout.addItem(self.space)
 

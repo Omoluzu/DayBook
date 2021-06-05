@@ -12,7 +12,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
 import modules
-
+from ico import recource
 
 class Task(QWidget, modules.ORM):
     """
@@ -38,13 +38,15 @@ class Task(QWidget, modules.ORM):
         self.setFixedHeight(50)
 
         layout = QHBoxLayout()
+        layout.setContentsMargins(10, 0, 0, 0)
 
         self.label_name_task = NameTask(self.name_task)
         layout.addWidget(self.label_name_task)
 
-        btn_close_task = QPushButton("Close")
+        btn_close_task = ButtonComplete()
         layout.addWidget(btn_close_task)
         btn_close_task.clicked.connect(self.action_close_task)
+        # btn_close_task.setIcon(QIcon(":/check.png"))
 
         self.setLayout(layout)
 
@@ -73,3 +75,13 @@ class NameTask(QLabel):
         font.setFamily("Gabriola")
         self.setFont(font)
 
+
+class ButtonComplete(QPushButton):
+
+    def __init__(self):
+        super().__init__()
+
+        self.setIcon(QIcon(":/check.png"))
+        self.setIconSize(QSize(50, 50))
+        self.setFixedSize(QSize(50, 50))
+        self.setFlat(True)

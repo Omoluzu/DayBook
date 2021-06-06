@@ -74,14 +74,21 @@ class Config:
         with open(self.file_config, "w") as config_file:
             self.config.write(config_file)
 
-    def get(self, selection, option, array=False):
-        """ Получение параметра конфигурации """
+    def get(self, selection: str, option: str, array: bool = False):
+        """
+        Получение параметра конфигурации
+
+        selection: str = Секция
+        option: str = Наименование параметра
+        array: bool = При установки флага возвращаемый элемент вернет как массив.
+        """
         if self.check_file_config:
             try:
                 if array:
                     return [x for x in self.config.get(selection, option).split(";")]
                 else:
                     return self.config.get(selection, option)
+
             except configparser.NoOptionError:
                 print(f"configparser.NoOptionError: Нет такого параметра в файле конфигов: {selection} - {option}")
                 return False

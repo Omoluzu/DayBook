@@ -73,3 +73,12 @@ class TaskWidget(QWidget, modules.ORM):
 
         # Добавляем space
         self.layout.addItem(self.space)
+
+    def get_action_task(self) -> list:
+        """
+        Возврат списка активных задач
+        """
+
+        for task in self.databases.query(modules.Task).all():
+            if not task.completed:
+                yield task.task_name

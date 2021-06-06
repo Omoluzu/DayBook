@@ -2,46 +2,24 @@
 # -*- coding: utf-8 -*-
 
 import os
-import datetime
 import configparser
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QKeySequence
 from pathlib import Path
 
+from UI import *
 from modules.TextDay import StartDay
 from modules.GuiMenuBar import AppMenuBar
-from UI import *
+from modules.Configuration import Config
 
-VERSION = "2.1.18"
+VERSION = "2.1.19"
 
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
 
 if os.path.isfile("history.md"):  # Для удобства разработка, чтобы конфигурационный файл был отдельно
     FILE_CONFIG = "settings.ini"
-
-
-def check_file_config():
-    """ Проверка на наличие файла конфигурации и создание его при отсутствие """
-
-    if not os.path.isdir(PATH_CONFIG):
-        os.mkdir(PATH_CONFIG)
-        print(f"LOG: Была создана папка с файлом конфигурации: {PATH_CONFIG}")
-
-    if not os.path.isfile(FILE_CONFIG):
-
-        config = configparser.ConfigParser()
-
-        config.add_section("OTHER")
-        config.set("OTHER", "path_save_daybook", os.path.abspath(os.curdir))  # Путь хранения записей дневника
-        config.set("OTHER", "days_of", str(datetime.datetime.now().date()))  # Дата начала ведения дневника
-        config.add_section("TEXT")
-        config.set("TEXT", "size", str(datetime.datetime.now().date()))  # Размер шрифта
-
-        with open(FILE_CONFIG, "w") as config_file:
-            config.write(config_file)
-            print(f"LOG: Был создан файл конфигурации: {FILE_CONFIG}")
 
 
 class AppStart(QMainWindow):
@@ -94,7 +72,10 @@ class AppStart(QMainWindow):
 
 if __name__ == "__main__":
 
-    check_file_config()  # Проверяем наличия файла конфигурации.
+    config = Config()
+    config.check_config()
+    config.check_parameters()
+    del config
 
     app = QApplication([])
     window = AppStart()

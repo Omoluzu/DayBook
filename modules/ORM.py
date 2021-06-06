@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import os
-
 from sqlalchemy import *
-from pathlib import Path
-from sqlalchemy.engine.url import URL
 from sqlalchemy.orm import sessionmaker
-import sqlalchemy.sql.default_comparator
 from sqlalchemy.ext.declarative import declarative_base
 
-# import settings
+from modules.Configuration import Config
 
 DeclarativeBase = declarative_base()
 
@@ -27,14 +22,15 @@ class Task(DeclarativeBase):
 
 class ORM:
     """ Класс для работы с ORM """
+    config = None
     databases = None
 
     def __init__(self):
 
         if not ORM.databases:
-            path = os.path.join(Path.home(), r"DayBook\sqlalchemy.db")
+            ORM.config = Config()
 
-            _engine = create_engine(f'sqlite:///{path}')
+            _engine = create_engine(f'sqlite:///{ORM.config.get("Databases", "path")}')
 
             DeclarativeBase.metadata.create_all(_engine)
             _Session = sessionmaker(bind=_engine)

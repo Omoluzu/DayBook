@@ -57,10 +57,7 @@ class Config:
 
             for item, key in value.items():
                 if not self.config.has_option(section, item):
-                    try:
-                        self.config.set(section, item, key)
-                    except TypeError:
-                        print(f"Значение параметра должна быть строкой: [{section}] {item} = {key} -> {type(key)}")
+                    self.config.set(section, item, str(key))
 
         with open(self.file_config, "w") as config_file:
             self.config.write(config_file)

@@ -5,7 +5,6 @@
 Головной виджет задач
 """
 
-import time
 import random
 
 from PyQt5.QtWidgets import *
@@ -45,10 +44,7 @@ class TaskBar(QWidget):
 
         list_task = list(self.task.get_action_task())
 
-        print("3")
-        time.sleep(1)
-        print("2")
-        time.sleep(1)
-        print("1")
-        time.sleep(1)
-        print(random.choice(list_task))
+        random_task = random.choice(list_task)
+
+        random_task_widget = UI.RandomTaskDialog(name_task=random_task)
+        random_task_widget.exec_()

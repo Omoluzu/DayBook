@@ -20,6 +20,14 @@ class Task(DeclarativeBase):
     date_completed = Column(DateTime)  # Дата завершения задачи
 
 
+class RandomTask(DeclarativeBase):
+
+    __tablename__ = "random_task"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    task_id = Column(Integer, ForeignKey(Task.id))
+
+
 class ORM:
     """ Класс для работы с ORM """
     config = None

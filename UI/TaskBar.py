@@ -5,8 +5,6 @@
 Головной виджет задач
 """
 
-import random
-
 from PyQt5.QtWidgets import *
 
 import UI
@@ -42,9 +40,10 @@ class TaskBar(QWidget):
     def action_select_random_task(self):
         """ Выбор рандомной задачи """
 
-        list_task = list(self.task.get_action_task())
+        # list_task = list(self.task.get_action_task())
+        #
+        # random_task = random.choice(list_task)
 
-        random_task = random.choice(list_task)
-
-        random_task_widget = UI.RandomTaskDialog(name_task=random_task)
+        # random_task_widget = UI.RandomTaskDialog(name_task=random_task)
+        random_task_widget = UI.RandomTaskDialog()
         random_task_widget.exec_()

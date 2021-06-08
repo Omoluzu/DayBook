@@ -25,12 +25,15 @@ class RandomTaskDialog(QDialog, modules.ORM):
         self.label_task = QLabel(" ")
         layout.addWidget(self.label_task)
 
-        btn_post_task = QPushButton("Получить рандомнцю задачу")
+        btn_post_task = QPushButton("Получить рандомную задачу")
         layout.addWidget(btn_post_task)
         btn_post_task.clicked.connect(self.action_random_task)
 
     def action_random_task(self):
 
         list_task = list(UI.TaskWidget.get_action_task())
-        random_task = random.choice(list_task)
-        self.label_task.setText(random_task)
+        id_random_task = random.choice(list_task)
+
+        name_task = self.databases.query(modules.Task).filter_by(id=id_random_task).one()
+
+        self.label_task.setText(name_task.task_name)

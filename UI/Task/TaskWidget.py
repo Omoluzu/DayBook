@@ -82,4 +82,4 @@ class TaskWidget(QWidget, modules.ORM):
 
         for task in cls.databases.query(modules.Task).all():
             if not task.completed:
-                yield task.task_name
+                yield task.id

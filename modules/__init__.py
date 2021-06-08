@@ -1,1 +1,1 @@
-from modules.ORM import ORM, Task
+from modules.ORM import ORM, Task, RandomTask

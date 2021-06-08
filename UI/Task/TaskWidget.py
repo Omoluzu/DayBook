@@ -29,7 +29,7 @@ class TaskWidget(QWidget, modules.ORM):
         self.setAutoFillBackground(True)
 
         p = self.palette()
-        p.setColor(self.backgroundRole(), Qt.green)
+        p.setColor(self.backgroundRole(), Qt.white)
         self.setPalette(p)
 
         self.space = QSpacerItem(150, 10, QSizePolicy.Minimum, QSizePolicy.Expanding)

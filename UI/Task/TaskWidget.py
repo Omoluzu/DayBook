@@ -57,7 +57,7 @@ class TaskWidget(QWidget, modules.ORM):
         # Добавление задачи в БД
         self.databases.add(modules.Task(
             task_name=name_task,
-            date_created=datetime.datetime.now()
+            date_created=datetime.datetime.now().date()
         ))
         self.databases.commit()
 

@@ -15,9 +15,9 @@ class Task(DeclarativeBase):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     task_name = Column(String(120))  # Название задачи
-    date_created = Column(DateTime)  # Дата создания задачи
+    date_created = Column(DATE)  # Дата создания задачи
     completed = Column(Boolean)  # Пометка об выполнении задачи
-    date_completed = Column(DateTime)  # Дата завершения задачи
+    date_completed = Column(DATE)  # Дата завершения задачи
 
 
 class RandomTask(DeclarativeBase):

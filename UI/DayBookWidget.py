@@ -4,6 +4,8 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QKeySequence, QFont
 
+import modules
+
 
 class DayBookWidget(QWidget):
 
@@ -11,17 +13,25 @@ class DayBookWidget(QWidget):
         super().__init__()
 
         self.parent = parent
+        self.tasks = modules.Tasks.Tasks()
 
         self.font = QFont()
         self.font.setPointSize(self.parent.config.getint("TEXT", "size"))
 
-        self.layout = QHBoxLayout()
+        layout = QVBoxLayout()
 
         self.text = QTextEdit()
         self.text.setHtml(self.parent.start_day.start())
         self.text.setReadOnly(True) if self.parent.start_day.check_read else self.text.setReadOnly(False)
         self.text.setFont(self.font)
 
-        self.layout.addWidget(self.text)
+        completed_task = QListWidget()
+        completed_task.setFixedHeight(100)
+        for i, task in enumerate(self.tasks.get_day_complete_task()):
+            completed_task.addItem(f"{i + 1}. {task.task_name}")
 
-        self.setLayout(self.layout)
+        layout.addWidget(self.text)
+        layout.addWidget(QLabel("Список выполненых задач:"))
+        layout.addWidget(completed_task)
+
+        self.setLayout(layout)

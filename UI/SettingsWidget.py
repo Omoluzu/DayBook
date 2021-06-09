@@ -57,13 +57,15 @@ class OpenCalendar(QWidget):
 
 
 class OpenFile(QFileDialog):
-    def __init__(self):
+    def __init__(self, file_name=None):
         super().__init__()
 
         self.path_directory = self.getExistingDirectory()
         self.setDirectory("C:")
 
         self.path_directory = os.path.normpath(self.path_directory)
+        if file_name:
+            self.path_directory = os.path.join(self.path_directory, file_name)
 
 
 class SettingsWidget(QWidget):
@@ -126,6 +128,22 @@ class SettingsWidget(QWidget):
         self.h3_layout.addWidget(self.text_size_text)
         self.text_size_text.setText(self.config.get("TEXT", "size"))
 
+        self.h4_layout = QHBoxLayout()
+        self.layout.addLayout(self.h4_layout)
+
+        self.label_path_save_db = QLabel("путь хранения базы данных")
+        self.h4_layout.addWidget(self.label_path_save_db)
+
+        self.text_path_save_db = QLineEdit()
+        self.text_path_save_db.setText(self.config.get("Databases", "path"))
+        self.text_path_save_db.setReadOnly(True)
+        self.h4_layout.addWidget(self.text_path_save_db)
+
+        self.btn_path_save_db = QPushButton("Выбрать", self)
+        self.btn_path_save_db.clicked.connect(self.selected_path_save_db)
+        self.h4_layout.addWidget(self.btn_path_save_db)
+
+        # СОХРАНИТЬ
         self.button_save_settings = QPushButton("Сохранить", self)
         self.button_save_settings.clicked.connect(self.save_settings)
         self.layout.addWidget(self.button_save_settings)
@@ -136,7 +154,9 @@ class SettingsWidget(QWidget):
         directory = OpenFile()
         self.text_path_save.setText(directory.path_directory)
 
-        print(directory.path_directory)
+    def selected_path_save_db(self):
+        directory = OpenFile(file_name='sqlalchemy.db')
+        self.text_path_save_db.setText(directory.path_directory)
 
     def selected_day_of(self):
         self.gui_calendar.show()
@@ -146,6 +166,7 @@ class SettingsWidget(QWidget):
         self.config.set("OTHER", "path_save_daybook", self.text_path_save.text())
         self.config.set("OTHER", "days_of", self.text_days_of.text())
         self.config.set("TEXT", "size", self.text_size_text.text())
+        self.config.set("Databases", "path", self.text_path_save_db.text())
 
         with open(self.file_config, "w") as config_file:
             self.config.write(config_file)

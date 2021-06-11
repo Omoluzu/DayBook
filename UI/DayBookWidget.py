@@ -30,6 +30,8 @@ class DayBookWidget(QWidget):
         for i, task in enumerate(self.tasks.get_day_complete_task()):
             completed_task.addItem(f"{i + 1}. {task.task_name}")
 
+        # completed_task.addAction()
+
         layout.addWidget(self.text)
         layout.addWidget(QLabel("Список выполненых задач:"))
         layout.addWidget(completed_task)

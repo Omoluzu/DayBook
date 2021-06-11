@@ -13,7 +13,7 @@ from modules.TextDay import StartDay
 from modules.GuiMenuBar import AppMenuBar
 from modules.Configuration import Config
 
-VERSION = "2.2.1"
+VERSION = "2.2.2"
 
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
@@ -67,7 +67,7 @@ class AppStart(QMainWindow):
         self.menu_bar = AppMenuBar(parent=self)
 
         self.setMenuBar(self.menu_bar)
-        self.show()
+        self.showMaximized()
 
 
 if __name__ == "__main__":

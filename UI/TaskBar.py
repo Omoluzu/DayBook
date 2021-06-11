@@ -19,13 +19,17 @@ class TaskBar(QWidget):
 
         self.task = UI.TaskWidget()
 
+        scroll = QScrollArea()
+        scroll.setWidget(self.task)
+        scroll.setWidgetResizable(True)
+
         self.create_task = QPushButton("Создать задачу")
         self.create_task.clicked.connect(self.action_create_task)
 
         random_task = QPushButton("Рандомная задача")
         random_task.clicked.connect(self.action_select_random_task)
 
-        self.layout.addWidget(self.task)
+        self.layout.addWidget(scroll)
         self.layout.addWidget(self.create_task)
         self.layout.addWidget(random_task)
 
@@ -37,13 +41,9 @@ class TaskBar(QWidget):
         create_task = UI.CreateTaskDialog(parent=self)
         create_task.exec_()
 
-    def action_select_random_task(self):
+    @staticmethod
+    def action_select_random_task():
         """ Выбор рандомной задачи """
 
-        # list_task = list(self.task.get_action_task())
-        #
-        # random_task = random.choice(list_task)
-
-        # random_task_widget = UI.RandomTaskDialog(name_task=random_task)
         random_task_widget = UI.RandomTaskDialog()
         random_task_widget.exec_()

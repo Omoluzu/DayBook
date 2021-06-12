@@ -8,11 +8,11 @@
 
 import datetime
 
-import modules
-from modules import ORM
+
+from modules import *
 
 
-class Tasks(ORM):
+class Tasks(ORM.ORM):
 
     def get_day_complete_task(self, day: datetime = datetime.datetime.today()) -> list:
         """
@@ -20,4 +20,4 @@ class Tasks(ORM):
 
         Используется в DayBookWidget для создания выполненых задач за сегодня
         """
-        return self.databases.query(modules.Task).filter_by(date_completed=day.date()).all()
+        return self.databases.query(ORM.Task).filter_by(date_completed=day.date()).all()

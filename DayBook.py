@@ -16,7 +16,9 @@ from modules.TextDay import StartDay
 from modules.GuiMenuBar import AppMenuBar
 from modules.Configuration import Config
 
-VERSION = "2.2.4"
+import modules
+
+VERSION = "2.2.5"
 
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
@@ -52,14 +54,16 @@ class AppStart(QMainWindow):
         self.key_ctrl_s.activated.connect(self.start_day.save)
 
         # Виджеты ТабВиджетов
-        self.day_book = DayBookWidget(parent=self)
-        self.task = TaskBar()
+        day_book = DayBookWidget(parent=self)
+        task = TaskBar()
+        random_task = modules.RandomTask.UI.RandomTaskWidget()
 
         # ТабВиджет
         self.t_bar = QTabWidget()
         self.t_bar.setTabPosition(QTabWidget.West)
-        self.t_bar.addTab(self.day_book, "Дневник")
-        self.t_bar.addTab(self.task, "Задачи")
+        self.t_bar.addTab(day_book, "Дневник")
+        self.t_bar.addTab(task, "Задачи")
+        self.t_bar.addTab(random_task, "Рандомная задача")
 
         # Layout
         self.layout = QHBoxLayout()

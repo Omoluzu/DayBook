@@ -2,10 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
+import ctypes
 import configparser
+from ico import recource
 
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QKeySequence
+from PyQt5.QtGui import QKeySequence, QIcon
 from pathlib import Path
 
 from UI import *
@@ -13,7 +16,7 @@ from modules.TextDay import StartDay
 from modules.GuiMenuBar import AppMenuBar
 from modules.Configuration import Config
 
-VERSION = "2.2.2"
+VERSION = "2.2.3"
 
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
@@ -21,12 +24,16 @@ FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
 if os.path.isfile("history.md"):  # Для удобства разработка, чтобы конфигурационный файл был отдельно
     FILE_CONFIG = "settings.ini"
 
+if sys.platform == "win32":
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(f'home.DayBool.{VERSION}')
+
 
 class AppStart(QMainWindow):
     def __init__(self):
         super().__init__()
 
         self.setWindowTitle(f"DayBook {VERSION}")
+        self.setWindowIcon(QIcon(":/day_book.png"))
 
         self.config = configparser.ConfigParser()
         self.config.read(FILE_CONFIG)

@@ -7,7 +7,7 @@
 
 from PyQt5.QtWidgets import *
 
-import UI
+import modules
 
 
 class TaskBar(QWidget):
@@ -17,7 +17,7 @@ class TaskBar(QWidget):
 
         self.layout = QVBoxLayout()
 
-        self.task = UI.TaskWidget()
+        self.task = modules.Tasks.UI.TaskWidget()
 
         scroll = QScrollArea()
         scroll.setWidget(self.task)
@@ -38,12 +38,12 @@ class TaskBar(QWidget):
     def action_create_task(self):
         """ Создание новой задачи """
 
-        create_task = UI.CreateTaskDialog(parent=self)
+        create_task = modules.Tasks.UI.CreateTaskDialog(parent=self)
         create_task.exec_()
 
     @staticmethod
     def action_select_random_task():
         """ Выбор рандомной задачи """
 
-        random_task_widget = UI.RandomTaskDialog()
+        random_task_widget = modules.Tasks.UI.RandomTaskDialog()
         random_task_widget.exec_()

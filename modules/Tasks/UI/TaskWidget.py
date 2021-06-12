@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 
 from modules import *
-import UI
+import modules
 
 
 class TaskWidget(QWidget, ORM.ORM):
@@ -36,7 +36,7 @@ class TaskWidget(QWidget, ORM.ORM):
 
         for task in self.databases.query(ORM.Task).all():
             if not task.completed:
-                self.layout.addWidget(UI.Task(id_task=task.id, name_task=task.task_name))
+                self.layout.addWidget(modules.Tasks.UI.Task(id_task=task.id, name_task=task.task_name))
 
     def create_task(self, name_task):
         """
@@ -57,7 +57,7 @@ class TaskWidget(QWidget, ORM.ORM):
         last_id_task = self.databases.query(ORM.Task).order_by(ORM.Task.id.desc()).first()
 
         # Создаем виджет задачи и добавлего для отображения
-        task = UI.Task(id_task=last_id_task.id, name_task=name_task)
+        task = modules.Tasks.UI.Task(id_task=last_id_task.id, name_task=name_task)
         self.layout.addWidget(task)
 
     @classmethod

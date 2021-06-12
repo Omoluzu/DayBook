@@ -10,7 +10,7 @@ import random
 from PyQt5.QtWidgets import *
 
 from modules import *
-import UI
+import modules
 
 
 class RandomTaskDialog(QDialog, ORM.ORM):
@@ -39,7 +39,7 @@ class RandomTaskDialog(QDialog, ORM.ORM):
 
     def action_random_task(self):
 
-        list_task = list(UI.TaskWidget.get_action_task())
+        list_task = list(modules.Tasks.UI.TaskWidget.get_action_task())
         id_random_task = random.choice(list_task)
 
         name_task = self.databases.query(ORM.Task).filter_by(id=id_random_task).one()

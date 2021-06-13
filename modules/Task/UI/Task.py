@@ -57,12 +57,44 @@ class Task(QWidget, ORM.ORM):
         """
         Завершение/выполнение задачи
         """
+        quest = QuestionCompletedTaskDialog()
+        quest.exec_()
 
-        self.db.completed = True  # Помечаем в БД что задача выполнена
-        self.db.date_completed = datetime.datetime.now().date()  # Сохраняем время выполнения задачи
-        self.databases.commit()  # Сохраняем информацию в БД
+        if quest.yesno:
 
-        self.close()  # Закрываем виджет с задачей
+            self.db.completed = True  # Помечаем в БД что задача выполнена
+            self.db.date_completed = datetime.datetime.now().date()  # Сохраняем время выполнения задачи
+            self.databases.commit()  # Сохраняем информацию в БД
+
+            self.close()  # Закрываем виджет с задачей
+
+
+class QuestionCompletedTaskDialog(QDialog):
+    yesno: bool  # Подтверждение выполнения задачи
+
+    def __init__(self):
+        super().__init__()
+        self.yesno = False
+
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+
+        layout.addWidget(QLabel("Подтвердите выполнение задачи"))
+
+        quest_layout = QHBoxLayout()
+        layout.addLayout(quest_layout)
+
+        no = QPushButton("НЕТ")
+        quest_layout.addWidget(no)
+        no.clicked.connect(self.close)
+
+        yes = QPushButton("ДА")
+        quest_layout.addWidget(yes)
+        yes.clicked.connect(self.action_yes)
+
+    def action_yes(self):
+        self.yesno = True
+        self.close()
 
 
 class NameTask(QLabel):

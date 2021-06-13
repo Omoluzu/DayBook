@@ -18,7 +18,7 @@ from modules.Configuration import Config
 
 import modules
 
-VERSION = "2.2.8"
+VERSION = "2.2.9"
 
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
@@ -55,7 +55,7 @@ class AppStart(QMainWindow):
 
         # Виджеты ТабВиджетов
         self.day_book = DayBookWidget(parent=self)
-        task = modules.Tasks.UI.TaskBar()
+        task = modules.Task.UI.TaskBar()
         random_task = modules.RandomTask.UI.RandomTaskWidget()
 
         # ТабВиджет

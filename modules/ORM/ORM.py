@@ -14,13 +14,12 @@ class ORM:
     config = None
     databases = None
 
-    def __init__(self):
+    if not databases:
+        config = Config()
 
-        if not ORM.databases:
-            ORM.config = Config()
+        _engine = create_engine(f'sqlite:///{config.get("Databases", "path")}')
 
-            _engine = create_engine(f'sqlite:///{ORM.config.get("Databases", "path")}')
+        DeclarativeBase.metadata.create_all(_engine)
+        _Session = sessionmaker(bind=_engine)
+        databases = _Session()
 
-            DeclarativeBase.metadata.create_all(_engine)
-            _Session = sessionmaker(bind=_engine)
-            ORM.databases = _Session()

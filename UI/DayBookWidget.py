@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QKeySequence, QFont
+from PyQt5.QtGui import QFont
 
 import modules
 
@@ -13,7 +13,6 @@ class DayBookWidget(QWidget):
         super().__init__()
 
         self.parent = parent
-        self.tasks = modules.Tasks.Tasks()
 
         self.font = QFont()
         self.font.setPointSize(self.parent.config.getint("TEXT", "size"))
@@ -27,10 +26,8 @@ class DayBookWidget(QWidget):
 
         completed_task = QListWidget()
         completed_task.setFixedHeight(100)
-        for i, task in enumerate(self.tasks.get_day_complete_task()):
+        for i, task in enumerate(modules.Tasks.get_day_complete_task()):
             completed_task.addItem(f"{i + 1}. {task.task_name}")
-
-        # completed_task.addAction()
 
         layout.addWidget(self.text)
         layout.addWidget(QLabel("Список выполненых задач:"))

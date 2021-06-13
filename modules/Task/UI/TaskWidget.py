@@ -38,7 +38,7 @@ class TaskWidget(QWidget, ORM.ORM):
         try:
             for task in self.databases.query(ORM.Task).all():
                 if not task.completed:
-                    self.layout.addWidget(modules.Tasks.UI.Task(id_task=task.id, name_task=task.task_name))
+                    self.layout.addWidget(modules.Task.UI.Task(id_task=task.id, name_task=task.task_name))
         except sqlalchemy.exc.OperationalError:
             pass
 
@@ -61,7 +61,7 @@ class TaskWidget(QWidget, ORM.ORM):
         last_id_task = self.databases.query(ORM.Task).order_by(ORM.Task.id.desc()).first()
 
         # Создаем виджет задачи и добавлего для отображения
-        task = modules.Tasks.UI.Task(id_task=last_id_task.id, name_task=name_task)
+        task = modules.Task.UI.Task(id_task=last_id_task.id, name_task=name_task)
         self.layout.addWidget(task)
 
     @classmethod

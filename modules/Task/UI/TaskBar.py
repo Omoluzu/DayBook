@@ -20,7 +20,7 @@ class TaskBar(QWidget):
         self.layout = QVBoxLayout()
 
         menu = TaskMenuWidget(task_bar=self)
-        self.task = modules.Tasks.UI.TaskWidget()
+        self.task = modules.Task.UI.TaskWidget()
 
         scroll = QScrollArea()
         scroll.setWidget(self.task)
@@ -39,7 +39,7 @@ class TaskBar(QWidget):
     def action_select_random_task():
         """ Выбор рандомной задачи """
 
-        random_task_widget = modules.Tasks.UI.RandomTaskDialog()
+        random_task_widget = modules.Task.UI.RandomTaskDialog()
         random_task_widget.exec_()
 
 
@@ -76,5 +76,5 @@ class ButtonCreateTask(QPushButton):
     def action_create_task(self):
         """ Создание новой задачи """
 
-        create_task = modules.Tasks.UI.CreateTaskDialog(parent=self.task_bar)
+        create_task = modules.Task.UI.CreateTaskDialog(parent=self.task_bar)
         create_task.exec_()

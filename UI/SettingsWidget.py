@@ -155,7 +155,7 @@ class SettingsWidget(QWidget):
         self.text_path_save.setText(directory.path_directory)
 
     def selected_path_save_db(self):
-        directory = OpenFile(file_name='sqlalchemy.db')
+        directory = OpenFile(file_name='DayBook.db')
         self.text_path_save_db.setText(directory.path_directory)
 
     def selected_day_of(self):

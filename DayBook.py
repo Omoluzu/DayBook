@@ -18,7 +18,7 @@ from modules.Configuration import Config
 
 import modules
 
-VERSION = "2.2.7"
+VERSION = "2.2.8"
 
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")

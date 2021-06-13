@@ -7,7 +7,7 @@
 """
 
 import datetime
-
+import sqlalchemy.exc
 
 from modules import *
 
@@ -20,4 +20,7 @@ class Tasks(ORM.ORM):
 
         Используется в DayBookWidget для создания выполненых задач за сегодня
         """
-        return self.databases.query(ORM.Task).filter_by(date_completed=day.date()).all()
+        try:
+            return self.databases.query(ORM.Task).filter_by(date_completed=day.date()).all()
+        except sqlalchemy.exc.OperationalError:
+            return []

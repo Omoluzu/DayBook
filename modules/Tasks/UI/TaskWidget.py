@@ -8,6 +8,7 @@
 """
 
 import datetime
+import sqlalchemy.exc
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -34,9 +35,12 @@ class TaskWidget(QWidget, ORM.ORM):
         self.layout = QVBoxLayout(self)
         self.layout.setAlignment(Qt.AlignTop)
 
-        for task in self.databases.query(ORM.Task).all():
-            if not task.completed:
-                self.layout.addWidget(modules.Tasks.UI.Task(id_task=task.id, name_task=task.task_name))
+        try:
+            for task in self.databases.query(ORM.Task).all():
+                if not task.completed:
+                    self.layout.addWidget(modules.Tasks.UI.Task(id_task=task.id, name_task=task.task_name))
+        except sqlalchemy.exc.OperationalError:
+            pass
 
     def create_task(self, name_task):
         """

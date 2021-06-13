@@ -13,6 +13,6 @@ MAIN = {
         "size": 12
     },
     "Databases": {
-        "path": os.path.join(Path.home(), r"DayBook\sqlalchemy.db")
+        "path": os.path.join(Path.home(), r"DayBook\DayBook.db")
     }
 }

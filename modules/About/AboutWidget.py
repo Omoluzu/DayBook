@@ -9,7 +9,7 @@ class AboutWidget(QWidget):
     def __init__(self, parent):
         super().__init__()
 
-        from DayBook import VERSION
+        from versions import info
 
         self.parent = parent
 
@@ -21,7 +21,7 @@ class AboutWidget(QWidget):
         self.label_name_project = QLabel("ДНЕВНИК")
         self.layout.addWidget(self.label_name_project)
 
-        self.label_version = QLabel(f'Версия программы: {VERSION}')
+        self.label_version = QLabel(f'Версия программы: {info["version"]}')
         self.layout.addWidget(self.label_version)
 
         self.label_copyright = QLabel("Copyright: \xa9 2020-2021 Волков Алексей")

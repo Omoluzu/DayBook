@@ -17,8 +17,7 @@ from modules.GuiMenuBar import AppMenuBar
 from modules.Configuration import Config
 
 import modules
-
-VERSION = "2.2.11"
+from versions import info
 
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
@@ -27,14 +26,14 @@ if os.path.isfile("history.md"):  # Для удобства разработка
     FILE_CONFIG = "settings.ini"
 
 if sys.platform == "win32":
-    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(f'home.DayBool.{VERSION}')
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(f'home.DayBool.{info["version"]}')
 
 
 class AppStart(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle(f"DayBook {VERSION}")
+        self.setWindowTitle(f"DayBook {info['version']}")
         self.setWindowIcon(QIcon(":/day_book.png"))
 
         self.config = configparser.ConfigParser()

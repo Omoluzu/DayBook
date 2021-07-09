@@ -20,7 +20,7 @@ class DayBookWidget(QWidget):
         layout = QVBoxLayout()
 
         self.text = QTextEdit()
-        self.text.setHtml(self.parent.start_day.start())
+        self.text.setText(self.parent.start_day.start())
         self.text.setReadOnly(True) if self.parent.start_day.check_read else self.text.setReadOnly(False)
         self.text.setFont(self.font)
 

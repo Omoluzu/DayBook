@@ -81,11 +81,13 @@ class StartDay:
         self.config = configparser.ConfigParser()  # Загружаем файл конфигурации
         self.config.read(self.file_config)  # Считываем файл конфигурации
 
-        self.current_date = datetime.datetime.now()  # Текущее время
+        self.current_date = datetime.datetime.now()  # Текущее дата
+        self.current_time = datetime.datetime.now().time().strftime("%H:%M")  # текущее время
 
         self.path_daybook = self.get_path_save()  # Получение полного пути сохраняемого файла
-        self.name_file_day = f"day_{self.current_date.strftime('%Y-%m-%d')}.html"
+        self.name_file_day = f"day_{self.current_date.strftime('%Y-%m-%d')}.txt"
         self.path_day = os.path.join(self.path_daybook, self.name_file_day)
+
 
     def get_path_save(self):
         """ Получение полного пути сохраняемого файла """
@@ -110,9 +112,11 @@ class StartDay:
 
     def start(self):
         """ Открытие или создание новой записей дневника  """
+
         if os.path.isfile(self.path_day):
             with open(self.path_day, "r", encoding="utf-8") as file:
-                return file.read()
+                text = f"{file.read()}\n\n{self.current_time}"
+                return text
         else:
             return self.welcome_entry()
 
@@ -125,11 +129,11 @@ class StartDay:
             month = DICT_MONTH[self.current_date.month]['welcome']
             year = str(self.current_date.year)
             weekday = DICT_WEEKDAY[self.current_date.weekday()]
-            days_of = (datetime.datetime.now() - datetime.datetime.strptime(self.config.get("OTHER", "days_of"), "%Y-%m-%d"))
-            return f"{day} {month} {year} - ({weekday}) - Дней ведения дневника: {days_of.days}"
+            days_of = datetime.datetime.now() - datetime.datetime.strptime(self.config.get("OTHER", "days_of"), "%Y-%m-%d")
+            return f"{day} {month} {year} - ({weekday}) - Дней ведения дневника: {days_of.days}\n\n{self.current_time}"
 
     def save(self):
         """ Сохранение записей дневника """
         if not self.check_read:
-            with open(self.path_day, "w", encoding="utf-8") as to_html:
-                to_html.write(self.parent.day_book.text.toHtml())
+            with open(self.path_day, "w", encoding="utf-8") as text:
+                text.write(self.parent.day_book.text.toPlainText())

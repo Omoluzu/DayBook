@@ -54,7 +54,7 @@ class AppStart(QMainWindow):
 
         # Виджеты ТабВиджетов
         self.day_book = modules.DayBook.UI.DayBookWidget(parent=self)
-        task = modules.Task.UI.TaskBar()
+        task = modules.Task.UI.TaskBar(parent=self)
         random_task = modules.RandomTask.UI.RandomTaskWidget()
 
         # ТабВиджет

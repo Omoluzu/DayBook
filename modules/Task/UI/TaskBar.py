@@ -13,14 +13,15 @@ import modules
 
 
 class TaskBar(QWidget):
+    parent: 'AppStart'
 
-    def __init__(self):
+    def __init__(self, parent):
         super().__init__()
 
-        self.layout = QVBoxLayout()
+        layout = QVBoxLayout()
 
-        menu = TaskMenuWidget(task_bar=self)
-        self.task = modules.Task.UI.TaskWidget()
+        menu = TaskMenuWidget(task_bar=self)  # Меню вджетов
+        self.task = modules.Task.UI.TaskWidget(parent=parent)  # Виджет вывода задач
 
         scroll = QScrollArea()
         scroll.setWidget(self.task)
@@ -29,11 +30,11 @@ class TaskBar(QWidget):
         random_task = QPushButton("Рандомная задача")
         random_task.clicked.connect(self.action_select_random_task)
 
-        self.layout.addWidget(menu)
-        self.layout.addWidget(scroll)
-        self.layout.addWidget(random_task)
+        layout.addWidget(menu)
+        layout.addWidget(scroll)
+        layout.addWidget(random_task)
 
-        self.setLayout(self.layout)
+        self.setLayout(layout)
 
     @staticmethod
     def action_select_random_task():

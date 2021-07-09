@@ -11,8 +11,6 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-# import modules
-
 from modules import *
 
 
@@ -20,13 +18,15 @@ class Task(QWidget, ORM.ORM):
     """
     Виджет задачи
     """
+    parent: 'AppStart'
     id_task: int  # ID задачи
     name_task: str  # Название задачи
     db: 'ORM.Task'  # Информация о задачи в БД
 
-    def __init__(self, id_task, name_task):
+    def __init__(self, parent, id_task, name_task):
         super().__init__()
 
+        self.parent = parent
         self.id_task = id_task
         self.name_task = name_task
         self.db = self.databases.query(ORM.Task).filter_by(id=self.id_task).one()
@@ -66,7 +66,9 @@ class Task(QWidget, ORM.ORM):
             self.db.date_completed = datetime.datetime.now().date()  # Сохраняем время выполнения задачи
             self.databases.commit()  # Сохраняем информацию в БД
 
+            self.parent.day_book.update_completed_task()  # Обновляем список выполненых задач. На странице дневника
             self.close()  # Закрываем виджет с задачей
+
 
 
 class QuestionCompletedTaskDialog(QDialog):

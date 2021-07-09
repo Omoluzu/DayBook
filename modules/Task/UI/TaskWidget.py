@@ -21,10 +21,13 @@ class TaskWidget(QWidget, ORM.ORM):
     """
     Виджет вывода списка всех задач
     """
+    parent: 'AppStart'  # Основное приложение для связи
     layout: QVBoxLayout  # Основной лайоут для задач
 
-    def __init__(self):
+    def __init__(self, parent):
         super().__init__()
+
+        self.parent = parent
 
         self.setAutoFillBackground(True)
 
@@ -38,7 +41,9 @@ class TaskWidget(QWidget, ORM.ORM):
         try:
             for task in self.databases.query(ORM.Task).all():
                 if not task.completed:
-                    self.layout.addWidget(modules.Task.UI.Task(id_task=task.id, name_task=task.task_name))
+                    self.layout.addWidget(
+                        modules.Task.UI.Task(parent=self.parent, id_task=task.id, name_task=task.task_name)
+                    )
         except sqlalchemy.exc.OperationalError:
             print("sqlalchemy.exc.OperationalError")
 
@@ -66,7 +71,7 @@ class TaskWidget(QWidget, ORM.ORM):
             last_id_task = self.databases.query(ORM.Task).order_by(ORM.Task.id.desc()).first()
 
             # Создаем виджет задачи и добавлего для отображения
-            task = modules.Task.UI.Task(id_task=last_id_task.id, name_task=name_task)
+            task = modules.Task.UI.Task(parent=self.parent, id_task=last_id_task.id, name_task=name_task)
             self.layout.addWidget(task)
 
     @classmethod

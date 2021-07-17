@@ -52,6 +52,9 @@ class AppStart(QMainWindow):
         self.key_ctrl_s = QShortcut(QKeySequence('Ctrl+S'), self)
         self.key_ctrl_s.activated.connect(self.start_day.save)
 
+        self.key_ctrl_t = QShortcut(QKeySequence('Ctrl+T'), self)
+        self.key_ctrl_t.activated.connect(self.start_day.insert_current_time)
+
         # Виджеты ТабВиджетов
         self.day_book = modules.DayBook.UI.DayBookWidget(parent=self)
         task = modules.Task.UI.TaskBar(parent=self)

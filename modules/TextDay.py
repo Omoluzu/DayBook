@@ -88,7 +88,6 @@ class StartDay:
         self.name_file_day = f"day_{self.current_date.strftime('%Y-%m-%d')}.txt"
         self.path_day = os.path.join(self.path_daybook, self.name_file_day)
 
-
     def get_path_save(self):
         """ Получение полного пути сохраняемого файла """
         path_daybook = self.config.get("OTHER", "path_save_daybook")
@@ -99,7 +98,7 @@ class StartDay:
             self.check_folder(path_month)
             return path_month
         else:
-            self.check_read = "Дирректории хранения файлов не существует. Проверьте пожалуйста настойки"
+            self.check_read = "Директории хранения файлов не существует. Проверьте пожалуйста настойки"
             print("LOG: Дирректории хранения файлов не существует.")
             return path_daybook
 
@@ -137,3 +136,11 @@ class StartDay:
         if not self.check_read:
             with open(self.path_day, "w", encoding="utf-8") as text:
                 text.write(self.parent.day_book.text.toPlainText())
+
+    def insert_current_time(self):
+        """
+        Подставка текущего времени в дневник
+        """
+        current_time = datetime.datetime.now().time().strftime("%H:%M")
+        text = f"{self.parent.day_book.text.toPlainText()}\n\n{current_time}"
+        self.parent.day_book.text.setPlainText(text)

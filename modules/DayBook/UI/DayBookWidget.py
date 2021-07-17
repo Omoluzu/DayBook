@@ -1,6 +1,8 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import datetime
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont
 
@@ -23,6 +25,7 @@ class DayBookWidget(QWidget):
 
         self.text = QTextEdit()
         self.text.setText(self.parent.start_day.start())
+        self.insert_current_time()
         self.text.setReadOnly(True) if self.parent.start_day.check_read else self.text.setReadOnly(False)
         self.text.setFont(self.font)
 
@@ -43,3 +46,11 @@ class DayBookWidget(QWidget):
         self.completed_task_widget.clear()
         for i, task in enumerate(modules.Tasks.get_day_complete_task()):
             self.completed_task_widget.addItem(f"{i + 1}. {task.task_name}")
+
+    def insert_current_time(self):
+        """
+        Подставка текущего времени в дневник
+        """
+        current_time = datetime.datetime.now().time().strftime("%H:%M")
+        text = f"{self.text.toPlainText()}\n\n{current_time}"
+        self.text.setPlainText(text)

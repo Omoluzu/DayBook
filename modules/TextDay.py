@@ -82,7 +82,6 @@ class StartDay:
         self.config.read(self.file_config)  # Считываем файл конфигурации
 
         self.current_date = datetime.datetime.now()  # Текущее дата
-        self.current_time = datetime.datetime.now().time().strftime("%H:%M")  # текущее время
 
         self.path_daybook = self.get_path_save()  # Получение полного пути сохраняемого файла
         self.name_file_day = f"day_{self.current_date.strftime('%Y-%m-%d')}.txt"
@@ -114,8 +113,7 @@ class StartDay:
 
         if os.path.isfile(self.path_day):
             with open(self.path_day, "r", encoding="utf-8") as file:
-                text = f"{file.read()}\n\n{self.current_time}"
-                return text
+                return file.read()
         else:
             return self.welcome_entry()
 
@@ -129,18 +127,10 @@ class StartDay:
             year = str(self.current_date.year)
             weekday = DICT_WEEKDAY[self.current_date.weekday()]
             days_of = datetime.datetime.now() - datetime.datetime.strptime(self.config.get("OTHER", "days_of"), "%Y-%m-%d")
-            return f"{day} {month} {year} - ({weekday}) - Дней ведения дневника: {days_of.days}\n\n{self.current_time}"
+            return f"{day} {month} {year} - ({weekday}) - Дней ведения дневника: {days_of.days}"
 
     def save(self):
         """ Сохранение записей дневника """
         if not self.check_read:
             with open(self.path_day, "w", encoding="utf-8") as text:
                 text.write(self.parent.day_book.text.toPlainText())
-
-    def insert_current_time(self):
-        """
-        Подставка текущего времени в дневник
-        """
-        current_time = datetime.datetime.now().time().strftime("%H:%M")
-        text = f"{self.parent.day_book.text.toPlainText()}\n\n{current_time}"
-        self.parent.day_book.text.setPlainText(text)

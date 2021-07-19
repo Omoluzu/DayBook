@@ -23,3 +23,13 @@ class Tasks(ORM.ORM):
             return cls.databases.query(ORM.Task).filter_by(date_completed=day.date()).all()
         except sqlalchemy.exc.OperationalError:
             return []
+
+    @classmethod
+    def get_task_by_id(cls, id_task: int):
+        """
+        Возврат задачи по ИД задачи в базе данных
+        """
+        try:
+            return cls.databases.query(ORM.Task).filter_by(id=id_task).one()
+        except sqlalchemy.exc.NoResultFound:
+            return " "

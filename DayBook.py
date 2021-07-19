@@ -50,15 +50,15 @@ class AppStart(QMainWindow):
 
         # Виджеты ТабВиджетов
         self.day_book = modules.DayBook.UI.DayBookWidget(parent=self)
+        current_task = modules.CurrentTask.UI.CurrentTaskBar(app=self)
         task = modules.Task.UI.TaskBar(parent=self)
-        random_task = modules.RandomTask.UI.RandomTaskWidget()
 
         # ТабВиджет
         self.t_bar = QTabWidget()
         self.t_bar.setTabPosition(QTabWidget.West)
         self.t_bar.addTab(self.day_book, "Дневник")
-        self.t_bar.addTab(task, "Задачи")
-        self.t_bar.addTab(random_task, "Рандомная задача")
+        self.t_bar.addTab(current_task, "Текущая задача")
+        self.t_bar.addTab(task, "Список задачи")
 
         # Layout
         self.layout = QHBoxLayout()

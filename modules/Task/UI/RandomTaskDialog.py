@@ -24,8 +24,11 @@ class RandomTaskDialog(QDialog, ORM.ORM):
             name_task = "Нету текущей задачи"
         else:
             task_id = id_random_task[0].task_id
-            task = self.databases.query(ORM.Task).filter_by(id=task_id).one()
-            name_task = task.task_name
+            if task_id:
+                task = self.databases.query(ORM.Task).filter_by(id=task_id).one()
+                name_task = task.task_name
+            else:
+                name_task = "None"
 
         layout = QVBoxLayout()
         self.setLayout(layout)

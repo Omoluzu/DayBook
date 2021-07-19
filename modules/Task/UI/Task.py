@@ -70,7 +70,6 @@ class Task(QWidget, ORM.ORM):
             self.close()  # Закрываем виджет с задачей
 
 
-
 class QuestionCompletedTaskDialog(QDialog):
     yesno: bool  # Подтверждение выполнения задачи
 

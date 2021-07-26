@@ -8,9 +8,17 @@
 
 
 from modules import *
+from modules.Task import Tasks
 
 
 class CurrentTask(ORM.ORM):
+
+    @classmethod
+    def get_current_task_all(cls):
+        """
+        Получения всего списка задач из БД Текущей задачи
+        """
+        return cls.databases.query(ORM.RandomTask).all()
 
     @classmethod
     def get_list_current_task(cls):
@@ -18,14 +26,29 @@ class CurrentTask(ORM.ORM):
         Вывести список текущих задач
         """
 
-        return cls.databases.query(ORM.RandomTask).all()
+        for current_task in CurrentTask.get_current_task_all():
+            if current_task.task_id:  # Проверка указан ли ИД задачи
+                task = Tasks.get_task_by_id(id_task=current_task.task_id)  # Нахождение задачи по её айди в общем списке
+                if task.completed:  # Проверка на выполнение задачи
+                    CurrentTask.deleted_current_task_by_id(id_current_task=current_task.id)  # Удаление связи с текущей задачеи
+                else:
+                    yield task  # Возвращаем задачу
 
     @classmethod
-    def clear_current_task_by_id(cls, id_current_task):
+    def deleted_current_task_by_id(cls, id_current_task):
         """
-        Очистить текущую задачу из таблицы текущих задач
+        Удаление связи из БД
         """
-
-        current_task = cls.databases.query(ORM.RandomTask).filter_by(id=id_current_task).one()
-        current_task.task_id = None
+        cls.databases.query(ORM.RandomTask).filter_by(id=id_current_task).delete()
         cls.databases.commit()
+
+    @classmethod
+    def add_current_task(cls, id_task):
+        """
+        Добавление новой задачи в БД текущих задач
+        """
+        if id_task:
+            cls.databases.add(ORM.RandomTask(
+                task_id=id_task
+            ))
+            cls.databases.commit()

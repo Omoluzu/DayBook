@@ -27,12 +27,12 @@ class TaskBar(QWidget):
         scroll.setWidget(self.task)
         scroll.setWidgetResizable(True)
 
-        random_task = QPushButton("Рандомная задача")
-        random_task.clicked.connect(self.action_select_random_task)
+        # random_task = QPushButton("Рандомная задача")
+        # random_task.clicked.connect(self.action_select_random_task)
 
         layout.addWidget(menu)
         layout.addWidget(scroll)
-        layout.addWidget(random_task)
+        # layout.addWidget(random_task)
 
         self.setLayout(layout)
 

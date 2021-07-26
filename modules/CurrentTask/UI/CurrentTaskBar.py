@@ -5,14 +5,16 @@
 Виджет вывода рандомных задач
 """
 
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QSpacerItem, QSizePolicy
 
-from modules.CurrentTask import CurrentTask
-from modules.Task import Tasks
+from modules.CurrentTask import CurrentTask, UI
 from modules import Task
 
 
 class CurrentTaskBar(QWidget):
+    """
+    Таб Бар Текущей задачи
+    """
     layout: QVBoxLayout
     app: 'AppStart'
 
@@ -39,6 +41,9 @@ class CurrentTaskBar(QWidget):
 
 
 class CurrentTaskWidget(QWidget):
+    """
+    Виджет вывода текущей задачи
+    """
     task_bar: CurrentTaskBar
 
     def __init__(self, app):
@@ -46,34 +51,17 @@ class CurrentTaskWidget(QWidget):
 
         self.task_bar = app
 
-        self.layout = QVBoxLayout()
-        self.setLayout(self.layout)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
 
         for current_task in CurrentTask.get_list_current_task():
-            self.layout.addWidget(Task.UI.Task(
+            layout.addWidget(Task.UI.Task(
                 parent=self.task_bar.app, id_task=current_task.id, name_task=current_task.task_name)
             )
 
         # Кнопка добавления новой задачи
-        self.btn_new_current_task = AdditionNewCurrentTaskButton(current_task_bar=self.task_bar)
-        self.layout.addWidget(self.btn_new_current_task)
+        btn_new_current_task = UI.AdditionNewCurrentTaskButton(current_task_bar=self.task_bar)
+        layout.addWidget(btn_new_current_task)
 
-
-class AdditionNewCurrentTaskButton(QPushButton):
-    """
-    Кнопка добавления новой задачи на выполнение.
-    """
-    current_task_bar: CurrentTaskBar
-
-    def __init__(self, current_task_bar):
-        super().__init__('Добавить задачу на выполнение')
-
-        self.current_task_bar = current_task_bar
-        self.clicked.connect(self.action_clicked)
-
-    def action_clicked(self):
-        """
-        Активация кнопки на добавление новой задачи на выполнение
-        """
-        CurrentTask.add_current_task(id_task=Tasks.get_random_task())
-        self.current_task_bar.show_task()
+        space = QSpacerItem(150, 10, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        layout.addItem(space)

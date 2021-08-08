@@ -1,1 +1,1 @@
-from modules.DayBook.UI.DayBookWidget import DayBookWidget
+from modules.DayBook.UI.DayBookWidget import DayBookWidget, DayBookStartWidget

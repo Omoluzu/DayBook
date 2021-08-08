@@ -16,7 +16,7 @@ class AppMenuBar(QMenuBar):
         self.addMenu(self.menu_bar_file)
 
         self.menu_bar_file_save = QAction("Сохранить (Ctrl+S)", self.menu_bar_file)
-        self.menu_bar_file_save.triggered.connect(self.parent.start_day.save)
+        self.menu_bar_file_save.triggered.connect(self.parent.day_book.save_day_book)
         self.menu_bar_file.addAction(self.menu_bar_file_save)
 
         self.menu_bar_file.addSeparator()

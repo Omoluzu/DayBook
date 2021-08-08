@@ -6,6 +6,7 @@
 """
 
 import datetime
+from ico import recource
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *

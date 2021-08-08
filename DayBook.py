@@ -12,7 +12,7 @@ from PyQt5.QtGui import QKeySequence, QIcon
 from pathlib import Path
 
 from UI import *
-from modules.TextDay import StartDay
+from modules.DayBook.TextDay import StartDay
 from modules.GuiMenuBar import AppMenuBar
 from modules.Configuration import Config
 
@@ -44,12 +44,13 @@ class AppStart(QMainWindow):
 
         self.setGeometry(self.indent_width, 50, 800, 800)
 
-        self.start_day = StartDay(file_config=FILE_CONFIG, parent=self)
+        # self.start_day = StartDay(file_config=FILE_CONFIG, parent=self)
         self.gui_settings = SettingsWidget(parent=self, file_config=FILE_CONFIG)  # Окно настроек
         self.gui_about = modules.AboutWidget(parent=self)  # Окно о программе
 
         # Виджеты ТабВиджетов
-        self.day_book = modules.DayBook.UI.DayBookWidget(parent=self)
+        # self.day_book = modules.DayBook.UI.DayBookWidget(app=self)
+        self.day_book = modules.DayBook.UI.DayBookStartWidget(app=self)
         current_task = modules.CurrentTask.UI.CurrentTaskBar(app=self)
         task = modules.Task.UI.TaskBar(parent=self)
 
@@ -77,7 +78,7 @@ class AppStart(QMainWindow):
 
         # Горячие клавиши
         self.key_ctrl_s = QShortcut(QKeySequence('Ctrl+S'), self)
-        self.key_ctrl_s.activated.connect(self.start_day.save)
+        self.key_ctrl_s.activated.connect(self.day_book.save_day_book)
 
         self.key_ctrl_t = QShortcut(QKeySequence('Ctrl+T'), self)
         self.key_ctrl_t.activated.connect(self.day_book.insert_current_time)

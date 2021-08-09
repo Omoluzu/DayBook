@@ -4,7 +4,11 @@
 import os
 import datetime
 import configparser
+from pathlib import Path
 
+
+PATH_CONFIG = os.path.join(Path.home(), "DayBook")
+FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
 
 DICT_MONTH = {
     1: {
@@ -72,8 +76,8 @@ class StartDay:
     """
     Возвращает или создает запись текущего дня
     """
-    def __init__(self, file_config, parent):
-        self.file_config = file_config
+    def __init__(self, parent):
+        self.file_config = FILE_CONFIG
         self.parent = parent
 
         self.check_read = False  # Чек на возможность введения записей в дневнике
@@ -133,4 +137,4 @@ class StartDay:
         """ Сохранение записей дневника """
         if not self.check_read:
             with open(self.path_day, "w", encoding="utf-8") as text:
-                text.write(self.parent.text.toPlainText())
+                text.write(self.parent.toPlainText())

@@ -1,7 +1,10 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
+from PyQt5.QtGui import QIcon
+
+from ico import recource
 
 
 class AboutWidget(QWidget):
@@ -15,6 +18,7 @@ class AboutWidget(QWidget):
 
         self.setWindowTitle("О программе")
         self.setGeometry(600, 200, 350, 100)
+        self.setWindowIcon(QIcon(":/day_book.png"))
 
         self.layout = QVBoxLayout()
 

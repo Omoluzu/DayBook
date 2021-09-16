@@ -10,6 +10,9 @@ from pathlib import Path
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
 
+if os.path.isfile("history.md"):  # Для удобства разработка, чтобы конфигурационный файл был отдельно
+    FILE_CONFIG = "settings.ini"
+
 DICT_MONTH = {
     1: {
         "save": "01.Январь",

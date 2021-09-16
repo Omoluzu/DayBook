@@ -13,7 +13,8 @@ import sqlalchemy.exc
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 
-from modules import *
+from modules import ORM
+from modules.Task import Tasks
 import modules
 
 
@@ -38,14 +39,7 @@ class TaskWidget(QWidget, ORM.ORM):
         self.layout = QVBoxLayout(self)
         self.layout.setAlignment(Qt.AlignTop)
 
-        try:
-            for task in self.databases.query(ORM.Task).all():
-                if not task.completed:
-                    self.layout.addWidget(
-                        modules.Task.UI.Task(parent=self.parent, id_task=task.id, name_task=task.task_name)
-                    )
-        except sqlalchemy.exc.OperationalError:
-            print("sqlalchemy.exc.OperationalError")
+        self.draw_list_task()
 
     def create_task(self, name_task):
         """
@@ -83,3 +77,16 @@ class TaskWidget(QWidget, ORM.ORM):
         for task in cls.databases.query(ORM.Task).all():
             if not task.completed:
                 yield task.id
+
+    def draw_list_task(self):
+        """
+        version 2.3.7
+
+        Отрисовка текущих невыполненых задач
+        """
+        for i in range(self.layout.count()):
+            self.layout.itemAt(i).widget().deleteLater()
+
+        for task in (list(Tasks.get_action_task())):
+            task_widget = modules.Task.UI.Task(parent=self.parent, id_task=task.id, name_task=task.task_name)
+            self.layout.addWidget(task_widget)

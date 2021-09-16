@@ -67,7 +67,7 @@ class Task(QWidget, ORM.ORM):
             self.db.date_completed = datetime.datetime.now().date()  # Сохраняем время выполнения задачи
             self.databases.commit()  # Сохраняем информацию в БД
 
-            self.parent.day_book.update_completed_task()  # Обновляем список выполненых задач. На странице дневника
+            self.parent.update_completed_task()  # Обновляем список выполненых задач. На странице дневника
             self.close()  # Закрываем виджет с задачей
 
 

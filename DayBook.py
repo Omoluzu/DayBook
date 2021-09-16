@@ -12,7 +12,6 @@ from PyQt5.QtGui import QKeySequence, QIcon
 from pathlib import Path
 
 from UI import *
-from modules.DayBook.TextDay import StartDay
 from modules.GuiMenuBar import AppMenuBar
 from modules.Configuration import Config
 
@@ -44,22 +43,20 @@ class AppStart(QMainWindow):
 
         self.setGeometry(self.indent_width, 50, 800, 800)
 
-        # self.start_day = StartDay(file_config=FILE_CONFIG, parent=self)
         self.gui_settings = SettingsWidget(parent=self, file_config=FILE_CONFIG)  # Окно настроек
         self.gui_about = modules.AboutWidget(parent=self)  # Окно о программе
 
         # Виджеты ТабВиджетов
-        # self.day_book = modules.DayBook.UI.DayBookWidget(app=self)
         self.day_book = modules.DayBook.UI.DayBookStartWidget(app=self)
         current_task = modules.CurrentTask.UI.CurrentTaskBar(app=self)
-        task = modules.Task.UI.TaskBar(parent=self)
+        self.task = modules.Task.UI.TaskBar(parent=self)
 
         # ТабВиджет
         self.t_bar = QTabWidget()
         self.t_bar.setTabPosition(QTabWidget.West)
         self.t_bar.addTab(self.day_book, "Дневник")
         self.t_bar.addTab(current_task, "Текущая задача")
-        self.t_bar.addTab(task, "Список задачи")
+        self.t_bar.addTab(self.task, "Список задачи")
 
         # Layout
         self.layout = QHBoxLayout()
@@ -82,6 +79,15 @@ class AppStart(QMainWindow):
 
         self.key_ctrl_t = QShortcut(QKeySequence('Ctrl+T'), self)
         self.key_ctrl_t.activated.connect(self.day_book.insert_current_time)
+
+    def update_completed_task(self):
+        """
+        version 2.3.7
+
+        Обновление списка выполненых задач.
+        """
+        self.day_book.update_completed_task()  # Обновляем список выполненых задач. На странице дневника
+        self.task.task.draw_list_task()  # Обновление списка невыполненых задач в представлении "Список задач"
 
 
 if __name__ == "__main__":

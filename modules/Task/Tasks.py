@@ -11,7 +11,6 @@ import datetime
 import sqlalchemy.exc
 
 from modules import *
-# from modules.CurrentTask import CurrentTask
 
 
 class Tasks(ORM.ORM):
@@ -44,7 +43,7 @@ class Tasks(ORM.ORM):
 
         for task in cls.databases.query(ORM.Task).all():
             if not task.completed:
-                yield task.id
+                yield task
 
     @classmethod
     def get_random_task(cls):
@@ -53,7 +52,7 @@ class Tasks(ORM.ORM):
         """
         from modules.CurrentTask import CurrentTask
 
-        task_all = set(cls.get_action_task())
+        task_all = set(task.id for task in cls.get_action_task())
         current_task = set(task.task_id for task in list(CurrentTask.get_current_task_all()))
         sequence = list(task_all ^ current_task)
 

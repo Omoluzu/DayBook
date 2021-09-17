@@ -14,5 +14,8 @@ MAIN = {
     },
     "Databases": {
         "path": os.path.join(Path.home(), r"DayBook\DayBook.db")
+    },
+    "HotKey": {
+        "time_insert": 'Ctrl+T',  # New version 2.3.8
     }
 }

@@ -143,6 +143,16 @@ class SettingsWidget(QWidget):
         self.btn_path_save_db.clicked.connect(self.selected_path_save_db)
         self.h4_layout.addWidget(self.btn_path_save_db)
 
+        h5_layout = QHBoxLayout()
+        self.layout.addLayout(h5_layout)
+
+        label_hotkey_time_insert = QLabel("Горячие клавиши на подстановку времени в дневник")
+        h5_layout.addWidget(label_hotkey_time_insert)
+
+        self.text_hotkey_time_insert = QLineEdit()
+        self.text_hotkey_time_insert.setText(self.config.get("HotKey", "time_insert"))
+        h5_layout.addWidget(self.text_hotkey_time_insert)
+
         # СОХРАНИТЬ
         self.button_save_settings = QPushButton("Сохранить", self)
         self.button_save_settings.clicked.connect(self.save_settings)
@@ -167,6 +177,7 @@ class SettingsWidget(QWidget):
         self.config.set("OTHER", "days_of", self.text_days_of.text())
         self.config.set("TEXT", "size", self.text_size_text.text())
         self.config.set("Databases", "path", self.text_path_save_db.text())
+        self.config.set("HotKey", "time_insert", self.text_hotkey_time_insert.text())
 
         with open(self.file_config, "w") as config_file:
             self.config.write(config_file)

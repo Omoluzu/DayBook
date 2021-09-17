@@ -35,8 +35,7 @@ class AppStart(QMainWindow):
         self.setWindowTitle(f"DayBook {info['version']}")
         self.setWindowIcon(QIcon(":/day_book.png"))
 
-        self.config = configparser.ConfigParser()
-        self.config.read(FILE_CONFIG)
+        self.config = Config()
 
         self.size_window = QDesktopWidget().screenGeometry()  # Получение разрешение экрана
         self.indent_width = int((self.size_window.width() / 2) - 400)  # Отступ по ширине
@@ -73,12 +72,14 @@ class AppStart(QMainWindow):
         self.setMenuBar(self.menu_bar)
         self.showMaximized()
 
-        # Горячие клавиши
+        # ГОРЯЧИЕ КЛАВИШИ
         self.key_ctrl_s = QShortcut(QKeySequence('Ctrl+S'), self)
         self.key_ctrl_s.activated.connect(self.day_book.save_day_book)
 
-        self.key_ctrl_t = QShortcut(QKeySequence('Ctrl+T'), self)
-        self.key_ctrl_t.activated.connect(self.day_book.insert_current_time)
+        # Подстановка времени в запись дневника
+        time_insert_key = QKeySequence(self.config.get("HotKey", "time_insert"))
+        short_cut_time_insert = QShortcut(time_insert_key, self)
+        short_cut_time_insert.activated.connect(self.day_book.insert_current_time)
 
     def update_completed_task(self):
         """

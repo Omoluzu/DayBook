@@ -6,6 +6,7 @@ import datetime
 from PyQt5.QtWidgets import QTextEdit
 from PyQt5.QtGui import QFont
 
+from modules.Configuration import Config
 from modules.DayBook.TextDay import StartDay
 
 
@@ -22,12 +23,12 @@ class DayBookTextEdit(QTextEdit):
     def __init__(self, app):
         super().__init__()
 
-        # self.app = app
+        config = Config()
         self.start_day = StartDay(parent=self)
 
         # Настройки виджета
         font = QFont()
-        font.setPointSize(app.config.getint("TEXT", "size"))
+        font.setPointSize(int(config.get("TEXT", "size")))
 
         # Текст
         self.setText(self.start_day.start())

@@ -21,7 +21,7 @@ class TaskBar(QWidget):
         layout = QVBoxLayout()
 
         menu = TaskMenuWidget(task_bar=self)  # Меню вджетов
-        self.task = modules.Task.UI.TaskWidget(parent=parent)  # Виджет вывода задач
+        self.task = modules.ListTask.UI.TaskWidget(parent=parent)  # Виджет вывода задач
 
         scroll = QScrollArea()
         scroll.setWidget(self.task)
@@ -77,5 +77,5 @@ class ButtonCreateTask(QPushButton):
     def action_create_task(self):
         """ Создание новой задачи """
 
-        create_task = modules.Task.UI.CreateTaskDialog(parent=self.task_bar)
+        create_task = modules.ListTask.UI.CreateTaskDialog(parent=self.task_bar)
         create_task.exec_()

@@ -8,7 +8,7 @@
 
 
 from modules import *
-from modules.Task import Tasks
+from modules.ListTask import Tasks
 
 
 class CurrentTask(ORM.ORM):

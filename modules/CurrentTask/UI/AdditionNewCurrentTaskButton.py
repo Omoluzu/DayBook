@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 
 """
-Кнопка на запрос зобавления новой текущей задачи
+Кнопка на запрос добавления новой текущей задачи
 """
 
 from PyQt5.QtWidgets import QPushButton
 
 from modules.CurrentTask import CurrentTask
-from modules.Task import Tasks
+from modules.ListTask import Tasks
 
 
 class AdditionNewCurrentTaskButton(QPushButton):

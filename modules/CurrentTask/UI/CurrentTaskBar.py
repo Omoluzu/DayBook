@@ -8,7 +8,7 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QSpacerItem, QSizePolicy
 
 from modules.CurrentTask import CurrentTask, UI
-from modules import Task
+from modules import TaskWidget
 
 
 class CurrentTaskBar(QWidget):
@@ -55,7 +55,7 @@ class CurrentTaskWidget(QWidget):
         self.setLayout(layout)
 
         for current_task in CurrentTask.get_list_current_task():
-            layout.addWidget(Task.UI.Task(
+            layout.addWidget(TaskWidget.Task(
                 parent=self.task_bar.app, id_task=current_task.id, name_task=current_task.task_name)
             )
 

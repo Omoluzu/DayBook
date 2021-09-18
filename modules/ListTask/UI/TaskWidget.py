@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 
 from modules import ORM
-from modules.Task import Tasks
+from modules.ListTask import Tasks
 import modules
 
 
@@ -65,7 +65,7 @@ class TaskWidget(QWidget, ORM.ORM):
             last_id_task = self.databases.query(ORM.Task).order_by(ORM.Task.id.desc()).first()
 
             # Создаем виджет задачи и добавлего для отображения
-            task = modules.Task.UI.Task(parent=self.parent, id_task=last_id_task.id, name_task=name_task)
+            task = modules.TaskWidget.Task(parent=self.parent, id_task=last_id_task.id, name_task=name_task)
             self.layout.addWidget(task)
 
     @classmethod
@@ -88,5 +88,5 @@ class TaskWidget(QWidget, ORM.ORM):
             self.layout.itemAt(i).widget().deleteLater()
 
         for task in (list(Tasks.get_action_task())):
-            task_widget = modules.Task.UI.Task(parent=self.parent, id_task=task.id, name_task=task.task_name)
+            task_widget = modules.TaskWidget.Task(parent=self.parent, id_task=task.id, name_task=task.task_name)
             self.layout.addWidget(task_widget)

@@ -57,3 +57,21 @@ class Tasks(ORM.ORM):
         sequence = list(task_all ^ current_task)
 
         return random.choice(list(task_all ^ current_task)) if sequence else None
+
+    @classmethod
+    def update_completed_task(cls, data):
+        """
+        new version 2.3.9
+
+        Обновление строки при выполнении задачи.
+
+        data = {
+            "id": 1,
+            "date_completed": 2021-09-18  # type datetime.now()
+        }
+        """
+        task = cls.databases.query(ORM.Task).filter_by(id=data['id']).one()
+
+        task.completed = True
+        task.date_completed = data['date_completed']
+        cls.databases.commit()

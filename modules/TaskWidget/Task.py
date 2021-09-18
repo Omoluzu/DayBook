@@ -13,6 +13,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
 from modules import *
+from modules.TaskWidget.QuestionCompletedTaskDialog import QuestionCompletedTaskDialog
 
 
 class Task(QWidget, ORM.ORM):
@@ -58,45 +59,17 @@ class Task(QWidget, ORM.ORM):
         """
         Завершение/выполнение задачи
         """
-        quest = QuestionCompletedTaskDialog()
+        quest = QuestionCompletedTaskDialog(id_task=self.id_task)
         quest.exec_()
 
         if quest.yesno:
 
-            self.db.completed = True  # Помечаем в БД что задача выполнена
-            self.db.date_completed = datetime.datetime.now().date()  # Сохраняем время выполнения задачи
-            self.databases.commit()  # Сохраняем информацию в БД
+            # self.db.completed = True  # Помечаем в БД что задача выполнена
+            # self.db.date_completed = datetime.datetime.now().date()  # Сохраняем время выполнения задачи
+            # self.databases.commit()  # Сохраняем информацию в БД
 
             self.parent.update_completed_task()  # Обновляем список выполненых задач. На странице дневника
             self.close()  # Закрываем виджет с задачей
-
-
-class QuestionCompletedTaskDialog(QDialog):
-    yesno: bool  # Подтверждение выполнения задачи
-
-    def __init__(self):
-        super().__init__()
-        self.yesno = False
-
-        layout = QVBoxLayout()
-        self.setLayout(layout)
-
-        layout.addWidget(QLabel("Подтвердите выполнение задачи"))
-
-        quest_layout = QHBoxLayout()
-        layout.addLayout(quest_layout)
-
-        no = QPushButton("НЕТ")
-        quest_layout.addWidget(no)
-        no.clicked.connect(self.close)
-
-        yes = QPushButton("ДА")
-        quest_layout.addWidget(yes)
-        yes.clicked.connect(self.action_yes)
-
-    def action_yes(self):
-        self.yesno = True
-        self.close()
 
 
 class NameTask(QLabel):

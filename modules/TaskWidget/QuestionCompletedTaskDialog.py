@@ -10,7 +10,9 @@ from datetime import datetime
 from PyQt5.QtWidgets import *
 
 from modules.ListTask.Tasks import Tasks
-from WrapperWidget.WrapperWidget import wrapper_widget
+from wrapperQWidget5.WrapperWidget import wrapper_widget
+
+__all__ = ['QuestionCompletedTaskDialog']
 
 
 class QuestionCompletedTaskDialog(QDialog):

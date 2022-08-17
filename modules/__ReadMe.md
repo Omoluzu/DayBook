@@ -7,5 +7,6 @@
   * ListTask.TaskWidget
     * TaskWidget.Task
       * TaskWidget.QuestionCompletedTaskDialog
+        * TaskWidget.OpenCalendar
       * TaskWidget.NameTask
       * TaskWidget.ButtonComplete

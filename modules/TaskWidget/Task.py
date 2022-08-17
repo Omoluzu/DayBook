@@ -9,14 +9,13 @@ import datetime
 from ico import recource
 
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from modules import *
-from modules.TaskWidget.QuestionCompletedTaskDialog import QuestionCompletedTaskDialog
+from .ButtonComplete import *
+from .QuestionCompletedTaskDialog import *
 
 
-class Task(QWidget, ORM.ORM):
+class Task(QWidget):
     """
     Виджет задачи
     """
@@ -31,7 +30,7 @@ class Task(QWidget, ORM.ORM):
         self.parent = parent
         self.id_task = id_task
         self.name_task = name_task
-        self.db = self.databases.query(ORM.Task).filter_by(id=self.id_task).one()
+        # self.db = self.databases.query(ORM.Task).filter_by(id=self.id_task).one()
 
         p = self.palette()
         p.setColor(self.backgroundRole(), QColor(200, 200, 200, 125))
@@ -63,11 +62,6 @@ class Task(QWidget, ORM.ORM):
         quest.exec_()
 
         if quest.yesno:
-
-            # self.db.completed = True  # Помечаем в БД что задача выполнена
-            # self.db.date_completed = datetime.datetime.now().date()  # Сохраняем время выполнения задачи
-            # self.databases.commit()  # Сохраняем информацию в БД
-
             self.parent.update_completed_task()  # Обновляем список выполненых задач. На странице дневника
             self.close()  # Закрываем виджет с задачей
 
@@ -83,12 +77,4 @@ class NameTask(QLabel):
         self.setFont(font)
 
 
-class ButtonComplete(QPushButton):
 
-    def __init__(self):
-        super().__init__()
-
-        self.setIcon(QIcon(":/check.png"))
-        self.setIconSize(QSize(50, 50))
-        self.setFixedSize(QSize(50, 50))
-        self.setFlat(True)

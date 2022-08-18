@@ -11,6 +11,8 @@ from ico import recource
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 
+from wrapperQWidget5.WrapperWidget import wrapper_widget
+
 from .ButtonComplete import *
 from .QuestionCompletedTaskDialog import *
 
@@ -54,6 +56,10 @@ class Task(QWidget):
     def __repr__(self):
         return f"{self.__class__.__name__} - {self.id_task}: {self.name_task}"
 
+    def mouseDoubleClickEvent(self, event):
+        dialog = TaskDialog(self)
+        dialog.exec_()
+
     def action_close_task(self):
         """
         Завершение/выполнение задачи
@@ -64,6 +70,22 @@ class Task(QWidget):
         if quest.yesno:
             self.parent.update_completed_task()  # Обновляем список выполненых задач. На странице дневника
             self.close()  # Закрываем виджет с задачей
+
+
+class TaskDialog(QDialog):
+
+    @wrapper_widget
+    def __init__(self, task: Task):
+        super(TaskDialog, self).__init__()
+        self.task = task
+
+        self.setWindowTitle(str(self.task.id_task))
+
+        self.layouts = {
+            "hbox": [
+                QLabel(self.task.name_task)
+            ]
+        }
 
 
 class NameTask(QLabel):

@@ -15,3 +15,4 @@ class Task(DeclarativeBase):
     date_created = Column(DATE)  # Дата создания задачи
     completed = Column(Boolean)  # Пометка об выполнении задачи
     date_completed = Column(DATE)  # Дата завершения задачи
+    description = Column(Text)  # Описание задачи

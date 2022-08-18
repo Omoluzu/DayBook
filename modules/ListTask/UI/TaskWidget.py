@@ -41,18 +41,23 @@ class TaskWidget(QWidget, ORM.ORM):
 
         self.draw_list_task()
 
-    def create_task(self, name_task):
+    def create_task(self, name_task, description):
         """
         Создание новой задачи.
 
         При создании задачи происходит добавление нового виджета задачи и
         запись задачи в базу данных
+
+        update version 2.4.1:
+            - Добавлен параметр description
+            - При сохранении задачи в БД, сохраняеться информация о Описании задачи (description)
         """
 
         # Добавление задачи в БД
         try:
             self.databases.add(ORM.Task(
                 task_name=name_task,
+                description=description,
                 date_created=datetime.datetime.now().date()
             ))
             self.databases.commit()

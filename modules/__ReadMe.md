@@ -2,7 +2,7 @@
 
 * ListTask.TaskBar
   * ListTask.askMenuWidget
-    * ListTask.ButtonCreateTask
+    * ListTask.CreateTaskDialog
       * ListTask.CreateTaskDialog
   * ListTask.TaskWidget
     * TaskWidget.Task

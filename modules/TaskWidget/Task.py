@@ -73,6 +73,13 @@ class Task(QWidget):
 
 
 class TaskDialog(QDialog):
+    """
+    Виджет редактирования информации по задаче
+
+    init version 2.4.0
+    update version 2.4.2
+        - Добавленна кнопка Сохранения информации по задачи
+    """
 
     @wrapper_widget
     def __init__(self, task: Task):
@@ -81,11 +88,23 @@ class TaskDialog(QDialog):
 
         self.setWindowTitle(str(self.task.id_task))
 
+        btn_save = QPushButton("Сохранить")
+        btn_save.clicked.connect(self.action_save_info_task)
+
         self.layouts = {
-            "hbox": [
-                QLabel(self.task.name_task)
+            "vbox": [
+                QLabel(self.task.name_task),
+                btn_save
             ]
         }
+
+    def action_save_info_task(self):
+        """
+        Активация кнопки сохранения информации по задачи
+
+        init version 2.4.2
+        """
+        print('Save')
 
 
 class NameTask(QLabel):

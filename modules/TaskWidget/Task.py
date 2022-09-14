@@ -15,6 +15,7 @@ from wrapperQWidget5.WrapperWidget import wrapper_widget
 
 from .ButtonComplete import *
 from .QuestionCompletedTaskDialog import *
+from modules.ListTask.Tasks import Tasks
 
 
 class Task(QWidget):
@@ -78,7 +79,9 @@ class TaskDialog(QDialog):
 
     init version 2.4.0
     update version 2.4.2
-        - Добавленна кнопка Сохранения информации по задачи
+        - Добавленна кнопка Сохранения информации по задачи.
+    update version 2.4.3
+        - Добавленна возможность изменения названия задачи.
     """
 
     @wrapper_widget
@@ -88,12 +91,14 @@ class TaskDialog(QDialog):
 
         self.setWindowTitle(str(self.task.id_task))
 
+        self.name_task = QLineEdit(self.task.name_task)
+
         btn_save = QPushButton("Сохранить")
         btn_save.clicked.connect(self.action_save_info_task)
 
         self.layouts = {
             "vbox": [
-                QLabel(self.task.name_task),
+                self.name_task,
                 btn_save
             ]
         }
@@ -103,8 +108,17 @@ class TaskDialog(QDialog):
         Активация кнопки сохранения информации по задачи
 
         init version 2.4.2
+        update version 2.4.3
+            - Реализован запрос на изменение информации о наименовании задачи.
         """
-        print('Save')
+        data = {
+            "id": self.task.id_task,
+            "name": self.name_task.text()
+        }
+
+        Tasks.update_info_task(data)
+
+        self.close()
 
 
 class NameTask(QLabel):

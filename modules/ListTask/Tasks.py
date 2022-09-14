@@ -75,3 +75,21 @@ class Tasks(ORM.ORM):
         task.completed = True
         task.date_completed = data['date_completed']
         cls.databases.commit()
+
+    @classmethod
+    def update_info_task(cls, data):
+        """
+        Обновление информации о задачи.
+
+        data = {
+            "id": <int>,  # Ид редактируемой задачи,
+            "name": <str>,  # Новое наименование задачи,
+            "notes": <str>,  # Новое описание к задачи,
+        }
+
+        new version 2.4.3
+        """
+        task = cls.databases.query(ORM.Task).filter_by(id=data['id']).one()
+
+        task.task_name = data['name']
+        cls.databases.commit()

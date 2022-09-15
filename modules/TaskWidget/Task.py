@@ -27,12 +27,18 @@ class Task(QWidget):
     name_task: str  # Название задачи
     db: 'ORM.Task'  # Информация о задачи в БД
 
-    def __init__(self, parent, id_task, name_task):
+    def __init__(self, parent, id_task, name_task, notes):
+        """
+
+        update version 2.4.6:
+            - Добавлен параметр notes. Хранящий в себе информацию о описании к задачи
+        """
         super().__init__()
 
         self.parent = parent
         self.id_task = id_task
         self.name_task = name_task
+        self.notes = notes
         # self.db = self.databases.query(ORM.Task).filter_by(id=self.id_task).one()
 
         p = self.palette()
@@ -76,22 +82,26 @@ class Task(QWidget):
 class TaskDialog(QDialog):
     """
     Виджет редактирования информации по задаче
-
-    init version 2.4.0
-    update version 2.4.2
-        - Добавленна кнопка Сохранения информации по задачи.
-    update version 2.4.3
-        - Добавленна возможность изменения названия задачи.
     """
 
     @wrapper_widget
     def __init__(self, task: Task):
+        """
+        init version 2.4.0
+        update version 2.4.2
+            - Добавленна кнопка Сохранения информации по задачи.
+        update version 2.4.3
+            - Добавленна возможность изменения названия задачи.
+        update version 2.4.6
+            - Добавлена выджет для описания задачи
+        """
         super(TaskDialog, self).__init__()
         self.task = task
 
         self.setWindowTitle(str(self.task.id_task))
 
         self.name_task = QLineEdit(self.task.name_task)
+        self.notes_task = QTextEdit(self.task.notes)
 
         btn_save = QPushButton("Сохранить")
         btn_save.clicked.connect(self.action_save_info_task)
@@ -99,6 +109,7 @@ class TaskDialog(QDialog):
         self.layouts = {
             "vbox": [
                 self.name_task,
+                self.notes_task,
                 btn_save
             ]
         }
@@ -116,10 +127,13 @@ class TaskDialog(QDialog):
         update version 2.4.5
             - Реализзация автоматического обновления информации по задачи в представлении "Текущая задача",
                 после редактирования
+        update version 2.4.6
+            - Передача информации на обновлении описания к задачи в БД.
         """
         data = {
             "id": self.task.id_task,
-            "name": self.name_task.text()
+            "name": self.name_task.text(),
+            "notes": self.notes_task.toPlainText()
         }
 
         Tasks.update_info_task(data)  # Обновление информации в базе данных

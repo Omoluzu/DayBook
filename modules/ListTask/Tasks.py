@@ -88,8 +88,11 @@ class Tasks(ORM.ORM):
         }
 
         new version 2.4.3
+        update version 2.4.6:
+            Добавленно сохранение описания в указанной задаче
         """
         task = cls.databases.query(ORM.Task).filter_by(id=data['id']).one()
 
         task.task_name = data['name']
+        task.description = data['notes']
         cls.databases.commit()

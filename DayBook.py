@@ -30,6 +30,11 @@ if sys.platform == "win32":
 
 class AppStart(QMainWindow):
     def __init__(self):
+        """
+
+        update version 2.4.5:
+            - current_task -> self.current_task
+        """
         super().__init__()
 
         self.setWindowTitle(f"DayBook {info['version']}")
@@ -47,14 +52,14 @@ class AppStart(QMainWindow):
 
         # Виджеты ТабВиджетов
         self.day_book = modules.DayBook.UI.DayBookStartWidget(app=self)
-        current_task = modules.CurrentTask.UI.CurrentTaskBar(app=self)
+        self.current_task = modules.CurrentTask.UI.CurrentTaskBar(app=self)
         self.task = modules.ListTask.UI.TaskBar(parent=self)
 
         # ТабВиджет
         self.t_bar = QTabWidget()
         self.t_bar.setTabPosition(QTabWidget.West)
         self.t_bar.addTab(self.day_book, "Дневник")
-        self.t_bar.addTab(current_task, "Текущая задача")
+        self.t_bar.addTab(self.current_task, "Текущая задача")
         self.t_bar.addTab(self.task, "Список задачи")
 
         # Layout

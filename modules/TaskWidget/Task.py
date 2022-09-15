@@ -113,15 +113,19 @@ class TaskDialog(QDialog):
         update version 2.4.4
             - Реализзация автоматического обновления информации по задачи в представлении "Список задач",
                 после редактирования
+        update version 2.4.5
+            - Реализзация автоматического обновления информации по задачи в представлении "Текущая задача",
+                после редактирования
         """
         data = {
             "id": self.task.id_task,
             "name": self.name_task.text()
         }
 
-        Tasks.update_info_task(data)
+        Tasks.update_info_task(data)  # Обновление информации в базе данных
 
-        self.task.parent.task.task.draw_list_task()
+        self.task.parent.task.task.draw_list_task()  # Обновление списка задач в представление "Список задач"
+        self.task.parent.current_task.show_task()  # Обновление списка задач в представление "Текущая задача"
 
         self.close()
 

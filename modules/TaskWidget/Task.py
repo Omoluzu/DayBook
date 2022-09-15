@@ -110,6 +110,9 @@ class TaskDialog(QDialog):
         init version 2.4.2
         update version 2.4.3
             - Реализован запрос на изменение информации о наименовании задачи.
+        update version 2.4.4
+            - Реализзация автоматического обновления информации по задачи в представлении "Список задач",
+                после редактирования
         """
         data = {
             "id": self.task.id_task,
@@ -117,6 +120,8 @@ class TaskDialog(QDialog):
         }
 
         Tasks.update_info_task(data)
+
+        self.task.parent.task.task.draw_list_task()
 
         self.close()
 

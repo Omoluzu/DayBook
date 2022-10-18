@@ -22,7 +22,7 @@ class Task(DeclarativeBase):
 
 
 class RandomTask(DeclarativeBase):
-    from modules.ORM.Task import Task
+    # from modules.ORM.Task import Task
 
     __tablename__ = "random_task"
 

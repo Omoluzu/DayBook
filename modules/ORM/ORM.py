@@ -10,7 +10,6 @@ DeclarativeBase = declarative_base()
 
 
 class Task(DeclarativeBase):
-
     __tablename__ = "tasks"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -19,11 +18,10 @@ class Task(DeclarativeBase):
     completed = Column(Boolean)  # Пометка об выполнении задачи
     date_completed = Column(DATE)  # Дата завершения задачи
     description = Column(Text)  # Описание задачи
+    current_task = Column(Boolean, default=True)  # Пометка о том что текущую задачу можно выводить в представлении "Список задач"
 
 
 class RandomTask(DeclarativeBase):
-    # from modules.ORM.Task import Task
-
     __tablename__ = "random_task"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

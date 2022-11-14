@@ -39,10 +39,13 @@ class Tasks(ORM.ORM):
     def get_action_task(cls) -> list:
         """
         Возврат списка активных задач
+
+        update version 2.4.7
+            - Обновление возвращаемого списка, Так же возвращаються все задачи помеченные как current_task в БД
         """
 
         for task in cls.databases.query(ORM.Task).all():
-            if not task.completed:
+            if not task.completed and task.current_task:
                 yield task
 
     @classmethod

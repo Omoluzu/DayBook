@@ -99,7 +99,7 @@ class TaskWidget(QWidget, ORM.ORM):
         for i in range(self.layout.count()):
             self.layout.itemAt(i).widget().deleteLater()
 
-        for task in (list(Tasks.get_action_task())):
+        for task in list(Tasks.get_action_task()):
             task_widget = modules.TaskWidget.Task(
                 parent=self.parent, id_task=task.id, name_task=task.task_name, notes=task.description
             )

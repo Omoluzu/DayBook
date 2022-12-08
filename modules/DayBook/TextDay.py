@@ -4,14 +4,19 @@
 import os
 import datetime
 import configparser
+import argparse
 from pathlib import Path
 
 
-PATH_CONFIG = os.path.join(Path.home(), "DayBook")
-FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
+parser = argparse.ArgumentParser(description="DayBook")
+parser.add_argument('-d', '--dev', action='store_true')
+args = parser.parse_args()
 
-if os.path.isfile("history.md"):  # Для удобства разработка, чтобы конфигурационный файл был отдельно
+if args.dev:
     FILE_CONFIG = "settings.ini"
+else:
+    PATH_CONFIG = os.path.join(Path.home(), "DayBook")
+    FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
 
 DICT_MONTH = {
     1: {

@@ -23,19 +23,11 @@ parser = argparse.ArgumentParser(description="DayBook")
 parser.add_argument('-d', '--dev', action='store_true')
 args = parser.parse_args()
 
-
-PATH_CONFIG = os.path.join(Path.home(), "DayBook")
-FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
-
 if args.dev:
     FILE_CONFIG = "settings.ini"
 else:
     PATH_CONFIG = os.path.join(Path.home(), "DayBook")
     FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
-
-
-# if os.path.isfile("history.md"):  # Для удобства разработка, чтобы конфигурационный файл был отдельно
-#   FILE_CONFIG = "settings.ini"
 
 if sys.platform == "win32":
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(f'home.DayBool.{info["version"]}')

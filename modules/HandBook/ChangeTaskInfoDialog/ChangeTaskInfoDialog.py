@@ -13,6 +13,7 @@ from PyQt5.QtGui import *
 
 from wrapperQWidget5.WrapperWidget import wrapper_widget
 
+from modules.ListTask.Tasks import Tasks
 # from .ButtonComplete import *
 # from .QuestionCompletedTaskDialog import *
 # from modules.ListTask.Tasks import Tasks
@@ -41,6 +42,7 @@ class ChangeTaskInfoDialog(QDialog):
         self.task = task
 
         self.setWindowTitle(str(self.task.id_task))
+        self.setGeometry(300, 300, 304, 415)
 
         self.name_task = QLineEdit(self.task.name_task)
         self.notes_task = QTextEdit(self.task.notes)
@@ -48,13 +50,30 @@ class ChangeTaskInfoDialog(QDialog):
         btn_save = QPushButton("Сохранить")
         btn_save.clicked.connect(self.action_save_info_task)
 
+        btn_hide = QPushButton(">")
+        btn_hide.clicked.connect(self.action_show_under_task)
+        btn_hide.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Minimum)
+        btn_hide.setMaximumWidth(20)
+
         self.layouts = {
-            "vbox": [
-                self.name_task,
-                self.notes_task,
-                btn_save
+            "hbox": [
+                {"vbox": [
+                    self.name_task,
+                    self.notes_task,
+                    btn_save
+                ]},
+                btn_hide
             ]
         }
+
+    def action_show_under_task(self):
+        """
+        Активация кнопки управления видимостью под задач
+
+        new versio 2.4.7
+        """
+        print(True)
+
 
     def action_save_info_task(self):
         """
@@ -84,5 +103,4 @@ class ChangeTaskInfoDialog(QDialog):
         self.task.parent.current_task.show_task()  # Обновление списка задач в представление "Текущая задача"
 
         self.close()
-
 

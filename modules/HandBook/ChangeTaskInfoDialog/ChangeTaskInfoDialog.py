@@ -42,7 +42,7 @@ class ChangeTaskInfoDialog(QDialog):
         self.task = task
 
         self.setWindowTitle(str(self.task.id_task))
-        self.setGeometry(300, 300, 304, 415)
+        self.setFixedSize(304, 415)
 
         self.name_task = QLineEdit(self.task.name_task)
         self.notes_task = QTextEdit(self.task.notes)
@@ -50,10 +50,10 @@ class ChangeTaskInfoDialog(QDialog):
         btn_save = QPushButton("Сохранить")
         btn_save.clicked.connect(self.action_save_info_task)
 
-        btn_hide = QPushButton(">")
-        btn_hide.clicked.connect(self.action_show_under_task)
-        btn_hide.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Minimum)
-        btn_hide.setMaximumWidth(20)
+        self.btn_hide = QPushButton(">")
+        self.btn_hide.clicked.connect(self.action_show_under_task)
+        self.btn_hide.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Minimum)
+        self.btn_hide.setMaximumWidth(20)
 
         self.layouts = {
             "hbox": [
@@ -62,7 +62,7 @@ class ChangeTaskInfoDialog(QDialog):
                     self.notes_task,
                     btn_save
                 ]},
-                btn_hide
+                self.btn_hide
             ]
         }
 
@@ -70,9 +70,14 @@ class ChangeTaskInfoDialog(QDialog):
         """
         Активация кнопки управления видимостью под задач
 
-        new versio 2.4.7
+        new version 2.4.7
         """
-        print(True)
+        if self.btn_hide.text() == ">":
+            self.setFixedSize(744, 415)
+            self.btn_hide.setText("<")
+        else:
+            self.setFixedSize(304, 415)
+            self.btn_hide.setText(">")
 
 
     def action_save_info_task(self):

@@ -2,11 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Виджет непосредственно самой задачи
+Виджет редактирования задач
 """
-
-import datetime
-from ico import recource
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -14,17 +11,53 @@ from PyQt5.QtGui import *
 from wrapperQWidget5.WrapperWidget import wrapper_widget
 
 from modules.ListTask.Tasks import Tasks
-# from .ButtonComplete import *
-# from .QuestionCompletedTaskDialog import *
-# from modules.ListTask.Tasks import Tasks
 
 
-class ChangeTaskInfoDialog(QDialog):
+class UI(QDialog):
+
+
+    @wrapper_widget
+    def __init__(self):
+        super().__init__()
+
+        # self.setWindowTitle(str(self.task.id_task))
+        self.setFixedSize(304, 415)
+
+        self.name_task = QLineEdit()
+        self.notes_task = QTextEdit()
+
+        self.btn_save = QPushButton("Сохранить")
+
+        self.btn_hide = QPushButton(">")
+        self.btn_hide.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Minimum)
+        self.btn_hide.setMaximumWidth(20)
+
+        self.under_task_widget = QWidget()
+        self.under_task_widget.setFixedSize(434, 415)
+        self.under_task_widget.setVisible(False)
+
+        self.layouts = {
+            "hbox": [
+                {"config": {
+                    "margin": 0
+                }},
+
+                {"vbox": [
+                    self.name_task,
+                    self.notes_task,
+                    self.btn_save
+                ]},
+                self.btn_hide,
+                self.under_task_widget
+            ]
+        }
+
+
+class ChangeTaskInfoDialog(UI):
     """
     Виджет редактирования информации по задаче
     """
 
-    @wrapper_widget
     def __init__(self, task: 'Task'):
         """
         init version 2.4.0
@@ -37,34 +70,16 @@ class ChangeTaskInfoDialog(QDialog):
         update version 2,4,7
             - Диалог переехал в новую структуру
             - Диалог был переименован с TaskDialog в ChangeTaskInfoDialog
+            - Отрисовка графики выведен в отдельный класс
         """
         super().__init__()
         self.task = task
 
-        self.setWindowTitle(str(self.task.id_task))
-        self.setFixedSize(304, 415)
+        self.name_task.setText(self.task.name_task)
+        self.notes_task.setText(self.task.notes)
 
-        self.name_task = QLineEdit(self.task.name_task)
-        self.notes_task = QTextEdit(self.task.notes)
-
-        btn_save = QPushButton("Сохранить")
-        btn_save.clicked.connect(self.action_save_info_task)
-
-        self.btn_hide = QPushButton(">")
+        self.btn_save.clicked.connect(self.action_save_info_task)
         self.btn_hide.clicked.connect(self.action_show_under_task)
-        self.btn_hide.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Minimum)
-        self.btn_hide.setMaximumWidth(20)
-
-        self.layouts = {
-            "hbox": [
-                {"vbox": [
-                    self.name_task,
-                    self.notes_task,
-                    btn_save
-                ]},
-                self.btn_hide
-            ]
-        }
 
     def action_show_under_task(self):
         """
@@ -74,9 +89,11 @@ class ChangeTaskInfoDialog(QDialog):
         """
         if self.btn_hide.text() == ">":
             self.setFixedSize(744, 415)
+            self.under_task_widget.setVisible(True)
             self.btn_hide.setText("<")
         else:
             self.setFixedSize(304, 415)
+            self.under_task_widget.setVisible(False)
             self.btn_hide.setText(">")
 
 

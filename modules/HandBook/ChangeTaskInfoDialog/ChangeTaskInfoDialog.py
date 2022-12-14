@@ -7,6 +7,7 @@
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+from PyQt5.QtCore import Qt
 
 from wrapperQWidget5.WrapperWidget import wrapper_widget
 
@@ -35,6 +36,9 @@ class UI(QDialog):
         self.under_task_widget = QWidget()
         self.under_task_widget.setFixedSize(434, 415)
         self.under_task_widget.setVisible(False)
+
+        self.under_layout = QVBoxLayout(self.under_task_widget)
+        self.under_layout.setAlignment(Qt.AlignTop)
 
         self.layouts = {
             "hbox": [
@@ -81,6 +85,8 @@ class ChangeTaskInfoDialog(UI):
         self.btn_save.clicked.connect(self.action_save_info_task)
         self.btn_hide.clicked.connect(self.action_show_under_task)
 
+        self.draw_under_task()
+
     def action_show_under_task(self):
         """
         Активация кнопки управления видимостью под задач
@@ -95,6 +101,16 @@ class ChangeTaskInfoDialog(UI):
             self.setFixedSize(304, 415)
             self.under_task_widget.setVisible(False)
             self.btn_hide.setText(">")
+
+    def draw_under_task(self):
+        """
+        Отрисовка виджета задач
+
+        new version 2.4.7
+        """
+        for under_task in ["1", "2", "3"]:
+            self.under_layout.addWidget(QLabel(under_task))
+
 
 
     def action_save_info_task(self):

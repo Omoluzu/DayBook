@@ -99,3 +99,33 @@ class Tasks(ORM.ORM):
         task.task_name = data['name']
         task.description = data['notes']
         cls.databases.commit()
+
+    @classmethod
+    def create_task(cls, data):
+        """
+        Создание задач
+
+        data = {
+            "name": str(),
+            "description": str(),  # Опционально
+            "current_task" False,  # Опционально
+        }
+
+        new version 2.4.7
+        """
+        assert data.get('name'), "ORM.TASKS.create_task - Необходим обязательный параметр name"
+
+        new_task = ORM.Task(
+            task_name=data['name'],
+            date_created=datetime.datetime.now().date()
+        )
+
+        if current_task := data.get('current_task'):
+            new_task.current_task = current_task
+
+        if description := data.get('description'):
+            new_task.description = description
+
+        cls.databases.add(new_task)
+        cls.databases.commit()
+        return new_task

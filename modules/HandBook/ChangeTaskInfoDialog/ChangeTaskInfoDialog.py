@@ -96,6 +96,7 @@ class ChangeTaskInfoDialog(UI):
 
         self.btn_save.clicked.connect(self.action_save_info_task)
         self.btn_hide.clicked.connect(self.action_show_under_task)
+        self.btn_under_task_create.clicked.connect(self.action_create_under_task)
 
         self.draw_under_task()
 
@@ -121,9 +122,11 @@ class ChangeTaskInfoDialog(UI):
         new version 2.4.7
         """
         # ToDo: Как обычно создаем запись в БД в таблицу tasks, но выставлея флаг curent_task
+        new_under_task = Tasks.create_task({"name": "Test Under Task"}) 
         # ToDo: Получаем ID это задачи
+        print(new_under_task.id)
         # ToDo: Создаеть запись в БД в таблицу link_task
-        ...
+        
 
 
     def action_save_info_task(self):

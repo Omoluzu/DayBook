@@ -28,6 +28,14 @@ class RandomTask(DeclarativeBase):
     task_id = Column(Integer, ForeignKey(Task.id))
 
 
+class LinkTask(DeclarativeBase):
+    __tablename__ = "link_task"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    task_id = Column(Integer, ForeignKey(Task.id))
+    under_task_id = Column(Integer, ForeignKey(Task.id))
+
+
 class ORM:
     """ Класс для работы с ORM """
     config = None

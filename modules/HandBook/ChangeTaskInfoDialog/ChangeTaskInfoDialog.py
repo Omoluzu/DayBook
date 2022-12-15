@@ -40,6 +40,8 @@ class UI(QDialog):
         self.under_layout = QVBoxLayout(self.under_task_widget)
         self.under_layout.setAlignment(Qt.AlignTop)
 
+        self.btn_under_task_create = QPushButton("Создать")
+
         self.layouts = {
             "hbox": [
                 {"config": {
@@ -55,6 +57,16 @@ class UI(QDialog):
                 self.under_task_widget
             ]
         }
+    
+    def draw_under_task(self):
+        """
+        Отрисовка виджета задач
+
+        new version 2.4.7
+        """
+        #for under_task in ["1", "2", "3"]:
+        #    self.under_layout.addWidget(QLabel(under_task))
+        self.under_layout.addWidget(self.btn_under_task_create)
 
 
 class ChangeTaskInfoDialog(UI):
@@ -102,15 +114,16 @@ class ChangeTaskInfoDialog(UI):
             self.under_task_widget.setVisible(False)
             self.btn_hide.setText(">")
 
-    def draw_under_task(self):
+    def action_create_under_task(self):
         """
-        Отрисовка виджета задач
+        Активация создания новой задачи
 
         new version 2.4.7
         """
-        for under_task in ["1", "2", "3"]:
-            self.under_layout.addWidget(QLabel(under_task))
-
+        # ToDo: Как обычно создаем запись в БД в таблицу tasks, но выставлея флаг curent_task
+        # ToDo: Получаем ID это задачи
+        # ToDo: Создаеть запись в БД в таблицу link_task
+        ...
 
 
     def action_save_info_task(self):

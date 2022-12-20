@@ -75,7 +75,18 @@ class ButtonCreateTask(QPushButton):
         self.clicked.connect(self.action_create_task)
 
     def action_create_task(self):
-        """ Создание новой задачи """
+        """ 
+        Создание новой задачи 
 
-        create_task = modules.ListTask.UI.CreateTaskDialog(parent=self.task_bar)
+        updade version 2.4.7
+            - В текущий метод вынесено создание задачи
+            - Удалено передача в класс CreateTaskDialog параметра self.task_bar
+        """
+
+        create_task = modules.ListTask.UI.CreateTaskDialog()
         create_task.exec_()
+        if create_task:
+            self.task_bar.task.create_task(
+                name_task=create_task.name_task.text(),
+                description=create_task.description.toPlainText()
+            )

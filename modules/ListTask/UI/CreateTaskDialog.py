@@ -15,17 +15,20 @@ class CreateTaskDialog(QDialog):
     """
 
     @wrapper_widget
-    def __init__(self, parent):
+    def __init__(self):
         """
 
         update version 2.4.1:
             - Использован декоратор wrapper_widget
             - добавлено поле для ввода описания задачи
+        update version 2.4.7:
+            - Удалено получение параметра parent
+            - Добавлен параметр для self.__create для проверки создания новой задачи
         """
 
         super().__init__()
 
-        self.parent = parent
+        self.__create = False
         self.name_task = QLineEdit()
         self.description = QTextEdit()
 
@@ -41,16 +44,23 @@ class CreateTaskDialog(QDialog):
             ]
         }
 
+    def __bool__(self):
+        """
+        Проверка на создание новой задачи
+
+        new version 2.4.7
+        """
+        return self.__create
+
     def action_create_task(self):
         """
         Добавление новой задачи
 
         update version 2.4.1
             - Передача информации об описании задачи
+        update version 2.4.7:
+            - Метод теперь не создает задачу. Он лишь закрывает виджет
+            - Изменение состояния флага self.create
         """
-
-        self.parent.task.create_task(
-            name_task=self.name_task.text(),
-            description=self.description.toPlainText()
-        )
+        self.__create = True
         self.close()

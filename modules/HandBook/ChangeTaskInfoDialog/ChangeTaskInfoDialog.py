@@ -12,6 +12,7 @@ from PyQt5.QtCore import Qt
 from wrapperQWidget5.WrapperWidget import wrapper_widget
 
 from modules.ListTask.Tasks import Tasks
+from modules.ListTask.UI.CreateTaskDialog import CreateTaskDialog
 
 
 class UI(QDialog):
@@ -121,10 +122,18 @@ class ChangeTaskInfoDialog(UI):
 
         new version 2.4.7
         """
+        new_task = CreateTaskDialog()
+        new_task.exec_()
+
+        if new_task:
+            print(new_task.name_task.text())
+
         # ToDo: Как обычно создаем запись в БД в таблицу tasks, но выставлея флаг curent_task
-        new_under_task = Tasks.create_task({"name": "Test Under Task"}) 
-        # ToDo: Получаем ID это задачи
-        print(new_under_task.id)
+            new_under_task = Tasks.create_task({
+                "name": new_task.name_task.text(),
+                "description": new_task.description.toPlainText()
+            }) 
+            print(new_under_task.id)
         # ToDo: Создаеть запись в БД в таблицу link_task
         
 

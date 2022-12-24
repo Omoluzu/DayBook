@@ -62,6 +62,22 @@ class Tasks(ORM.ORM):
         return random.choice(list(task_all ^ current_task)) if sequence else None
 
     @classmethod
+    def get_under_task(cls, task_id: int):
+        """
+        Получение списка связанных подзадач
+
+        task_id: int() - ID  искомой задачи
+
+        new version 2.4.7
+        """
+        def get_list_under_task():
+            for link in cls.databases.query(ORM.LinkTask).filter_by(task_id=task_id).all():
+                under_task = cls.get_task_by_id(link.under_task_id)
+                yield under_task
+
+        return list(get_list_under_task())
+
+    @classmethod
     def update_completed_task(cls, data):
         """
         new version 2.3.9

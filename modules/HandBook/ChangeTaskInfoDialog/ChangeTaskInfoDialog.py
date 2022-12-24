@@ -59,14 +59,14 @@ class UI(QDialog):
             ]
         }
     
-    def draw_under_task(self):
+    def draw_under_task(self, list_under_task):
         """
         Отрисовка виджета задач
 
         new version 2.4.7
         """
-        #for under_task in ["1", "2", "3"]:
-        #    self.under_layout.addWidget(QLabel(under_task))
+        for under_task in list_under_task:
+            self.under_layout.addWidget(QLabel(under_task.task_name))
         self.under_layout.addWidget(self.btn_under_task_create)
 
 
@@ -99,7 +99,7 @@ class ChangeTaskInfoDialog(UI):
         self.btn_hide.clicked.connect(self.action_show_under_task)
         self.btn_under_task_create.clicked.connect(self.action_create_under_task)
 
-        self.draw_under_task()
+        self.draw_under_task(Tasks.get_under_task(self.task.id_task))
 
     def action_show_under_task(self):
         """
@@ -135,6 +135,7 @@ class ChangeTaskInfoDialog(UI):
                 task_id = self.task.id_task,
                 under_task_id = new_under_task.id                
             )
+            # ToDo: перерисовка списка текущих задач
 
     def action_save_info_task(self):
         """

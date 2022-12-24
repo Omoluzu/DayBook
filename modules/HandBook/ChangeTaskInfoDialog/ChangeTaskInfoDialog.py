@@ -126,22 +126,15 @@ class ChangeTaskInfoDialog(UI):
         new_task.exec_()
 
         if new_task:
-
-        # ToDo: Как обычно создаем запись в БД в таблицу tasks, но выставлея флаг curent_task
-            new_under_task = Tasks.create_task({
-                "name": new_task.name_task.text(),
-                "description": new_task.description.toPlainText()
-            }) 
-            print(new_under_task.id)
-            
-            Tasks.create_link_task(
+            new_under_task = Tasks.create_task(  # Создание новой подзадачи
+                name = new_task.name_task.text(),
+                description = new_task.description.toPlainText(),
+                current_task = False
+            ) 
+            Tasks.create_link_task(  # Связь текущей задачи с подзадачей
                 task_id = self.task.id_task,
                 under_task_id = new_under_task.id                
             )
-
-        # ToDo: Создаеть запись в БД в таблицу link_task
-        
-
 
     def action_save_info_task(self):
         """

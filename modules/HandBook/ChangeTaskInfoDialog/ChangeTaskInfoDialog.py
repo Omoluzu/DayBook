@@ -126,7 +126,6 @@ class ChangeTaskInfoDialog(UI):
         new_task.exec_()
 
         if new_task:
-            print(new_task.name_task.text())
 
         # ToDo: Как обычно создаем запись в БД в таблицу tasks, но выставлея флаг curent_task
             new_under_task = Tasks.create_task({
@@ -134,6 +133,12 @@ class ChangeTaskInfoDialog(UI):
                 "description": new_task.description.toPlainText()
             }) 
             print(new_under_task.id)
+            
+            Tasks.create_link_task(
+                task_id = self.task.id_task,
+                under_task_id = new_under_task.id                
+            )
+
         # ToDo: Создаеть запись в БД в таблицу link_task
         
 

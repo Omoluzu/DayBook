@@ -129,3 +129,17 @@ class Tasks(ORM.ORM):
         cls.databases.add(new_task)
         cls.databases.commit()
         return new_task
+
+    @classmethod
+    def create_link_task(cls, task_id, under_task_id):
+        """
+        Создание связей для задач
+
+        new version 2.4.7  
+        """
+
+        cls.databases.add(ORM.LinkTask(
+            task_id = task_id,
+            under_task_id = under_task_id
+        ))
+        cls.databases.commit()

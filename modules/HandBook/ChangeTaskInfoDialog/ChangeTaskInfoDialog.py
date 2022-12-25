@@ -80,6 +80,12 @@ class UnderTaskWidget(QWidget):
     def __init__(self, under_task):
         super().__init__()
 
+        p = self.palette()
+        p.setColor(self.backgroundRole(), QColor(255, 200, 0, 127))
+        # p.setColor(self.backgroundRole(), 7)
+        self.setPalette(p)
+        self.setAutoFillBackground(True)
+
         self.layouts = {
             "hbox": [
                 QLabel(under_task.task_name)
@@ -117,6 +123,7 @@ class ChangeTaskInfoDialog(UI):
         self.btn_under_task_create.clicked.connect(self.action_create_under_task)
 
         self.draw_under_task(Tasks.get_under_task(self.task.id_task))
+        self.exec_()
 
     def action_show_under_task(self):
         """

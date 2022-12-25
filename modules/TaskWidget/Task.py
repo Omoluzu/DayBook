@@ -65,9 +65,7 @@ class Task(QWidget):
         return f"{self.__class__.__name__} - {self.id_task}: {self.name_task}"
 
     def mouseDoubleClickEvent(self, event):
-        # dialog = TaskDialog(self)
-        dialog = ChangeTaskInfoDialog(self)
-        dialog.exec_()
+        ChangeTaskInfoDialog(self)
 
     def action_close_task(self):
         """

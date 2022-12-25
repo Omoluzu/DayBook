@@ -62,12 +62,29 @@ class UI(QDialog):
     def draw_under_task(self, list_under_task):
         """
         Отрисовка виджета задач
-
+ 
         new version 2.4.7
         """
         for under_task in list_under_task:
-            self.under_layout.addWidget(QLabel(under_task.task_name))
+            self.under_layout.addWidget(UnderTaskWidget(under_task))
         self.under_layout.addWidget(self.btn_under_task_create)
+
+
+class UnderTaskWidget(QWidget):
+    """
+    Виджет отрисовки подзадач
+
+    new version 2.4.7
+    """
+    @wrapper_widget
+    def __init__(self, under_task):
+        super().__init__()
+
+        self.layouts = {
+            "hbox": [
+                QLabel(under_task.task_name)
+            ]
+        }
 
 
 class ChangeTaskInfoDialog(UI):

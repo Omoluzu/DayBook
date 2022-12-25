@@ -22,7 +22,6 @@ class UI(QDialog):
     def __init__(self):
         super().__init__()
 
-        # self.setWindowTitle(str(self.task.id_task))
         self.setFixedSize(304, 415)
 
         self.name_task = QLineEdit()
@@ -35,13 +34,12 @@ class UI(QDialog):
         self.btn_hide.setMaximumWidth(20)
 
         self.under_task_widget = QWidget()
+        # ToDo: QScroll
         self.under_task_widget.setFixedSize(434, 415)
         self.under_task_widget.setVisible(False)
 
         self.under_layout = QVBoxLayout(self.under_task_widget)
         self.under_layout.setAlignment(Qt.AlignTop)
-
-        self.btn_under_task_create = QPushButton("Создать")
 
         self.layouts = {
             "hbox": [
@@ -59,16 +57,6 @@ class UI(QDialog):
             ]
         }
     
-    def draw_under_task(self, list_under_task):
-        """
-        Отрисовка виджета задач
- 
-        new version 2.4.7
-        """
-        for under_task in list_under_task:
-            self.under_layout.addWidget(UnderTaskWidget(under_task))
-        self.under_layout.addWidget(self.btn_under_task_create)
-
 
 class UnderTaskWidget(QWidget):
     """
@@ -141,7 +129,6 @@ class ChangeTaskInfoDialog(UI):
 
         self.btn_save.clicked.connect(self.action_save_info_task)
         self.btn_hide.clicked.connect(self.action_show_under_task)
-        self.btn_under_task_create.clicked.connect(self.action_create_under_task)
 
         self.draw_under_task(Tasks.get_under_task(self.task.id_task))
         self.exec_()
@@ -180,7 +167,7 @@ class ChangeTaskInfoDialog(UI):
                 task_id = self.task.id_task,
                 under_task_id = new_under_task.id                
             )
-            # ToDo: перерисовка списка текущих задач
+            self.draw_under_task(Tasks.get_under_task(self.task.id_task))
 
     def action_save_info_task(self):
         """
@@ -210,4 +197,20 @@ class ChangeTaskInfoDialog(UI):
         self.task.parent.current_task.show_task()  # Обновление списка задач в представление "Текущая задача"
 
         self.close()
+
+    def draw_under_task(self, list_under_task):
+        """
+        Отрисовка виджета задач
+ 
+        new version 2.4.7
+        """
+        for i in range(self.under_layout.count()):
+            self.under_layout.itemAt(i).widget().deleteLater()
+
+        for under_task in list_under_task:
+            self.under_layout.addWidget(UnderTaskWidget(under_task))
+
+        self.btn_under_task_create = QPushButton("Создать")
+        self.under_layout.addWidget(self.btn_under_task_create)
+        self.btn_under_task_create.clicked.connect(self.action_create_under_task)
 

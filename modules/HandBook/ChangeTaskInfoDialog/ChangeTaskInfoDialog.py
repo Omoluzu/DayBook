@@ -82,14 +82,35 @@ class UnderTaskWidget(QWidget):
 
         p = self.palette()
         p.setColor(self.backgroundRole(), QColor(255, 200, 0, 127))
-        # p.setColor(self.backgroundRole(), 7)
         self.setPalette(p)
         self.setAutoFillBackground(True)
+        
+        self.btn = CompliteUnderTaskButton()
+        self.btn.clicked.connect(self.action_complite_task)
 
         self.layouts = {
             "hbox": [
-                QLabel(under_task.task_name)
+                QLabel(under_task.task_name),
+                self.btn
             ]
+        }
+
+    def action_complite_task(self):
+        """
+        Активация завершения задачи
+
+        new version 2.4.7
+        """
+        self.close()
+
+
+class CompliteUnderTaskButton(QPushButton):
+    @wrapper_widget
+    def __init__(self):
+        super().__init__("+")
+
+        self.config = {
+            "size": 30
         }
 
 

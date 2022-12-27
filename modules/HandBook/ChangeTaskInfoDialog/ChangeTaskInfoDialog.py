@@ -34,9 +34,14 @@ class UI(QDialog):
         self.btn_hide.setMaximumWidth(20)
 
         self.under_task_widget = QWidget()
-        # ToDo: QScroll
-        self.under_task_widget.setFixedSize(434, 415)
-        self.under_task_widget.setVisible(False)
+        # self.under_task_widget.setFixedSize(434, 415)
+        #`self.under_task_widget.setVisible(False)
+
+        self.scroll = QScrollArea()
+        self.scroll.setFixedSize(434, 415)
+        self.scroll.setVisible(False)
+        self.scroll.setWidget(self.under_task_widget)
+        self.scroll.setWidgetResizable(True)
 
         self.under_layout = QVBoxLayout(self.under_task_widget)
         self.under_layout.setAlignment(Qt.AlignTop)
@@ -53,7 +58,8 @@ class UI(QDialog):
                     self.btn_save
                 ]},
                 self.btn_hide,
-                self.under_task_widget
+                # self.under_task_widget
+                self.scroll
             ]
         }
     
@@ -141,11 +147,11 @@ class ChangeTaskInfoDialog(UI):
         """
         if self.btn_hide.text() == ">":
             self.setFixedSize(744, 415)
-            self.under_task_widget.setVisible(True)
+            self.scroll.setVisible(True)
             self.btn_hide.setText("<")
         else:
             self.setFixedSize(304, 415)
-            self.under_task_widget.setVisible(False)
+            self.scroll.setVisible(False)
             self.btn_hide.setText(">")
 
     def action_create_under_task(self):

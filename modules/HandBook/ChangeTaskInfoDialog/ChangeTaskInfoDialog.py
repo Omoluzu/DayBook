@@ -7,7 +7,7 @@
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSize
 
 from wrapperQWidget5.WrapperWidget import wrapper_widget
 
@@ -34,8 +34,6 @@ class UI(QDialog):
         self.btn_hide.setMaximumWidth(20)
 
         self.under_task_widget = QWidget()
-        # self.under_task_widget.setFixedSize(434, 415)
-        #`self.under_task_widget.setVisible(False)
 
         self.scroll = QScrollArea()
         self.scroll.setFixedSize(434, 415)
@@ -58,7 +56,6 @@ class UI(QDialog):
                     self.btn_save
                 ]},
                 self.btn_hide,
-                # self.under_task_widget
                 self.scroll
             ]
         }
@@ -79,7 +76,8 @@ class UnderTaskWidget(QWidget):
         self.setPalette(p)
         self.setAutoFillBackground(True)
         
-        self.btn = CompliteUnderTaskButton()
+        self.btn = QPushButton()
+        self.btn.setFixedSize(QSize(30, 30))
         self.btn.clicked.connect(self.action_complite_task)
 
         self.layouts = {
@@ -103,9 +101,9 @@ class CompliteUnderTaskButton(QPushButton):
     def __init__(self):
         super().__init__("+")
 
-        self.config = {
-            "size": 30
-        }
+        #self.config = {
+        #    "size": 30
+        #}
 
 
 class ChangeTaskInfoDialog(UI):

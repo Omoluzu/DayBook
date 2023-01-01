@@ -13,6 +13,7 @@ from wrapperQWidget5.WrapperWidget import wrapper_widget
 
 from modules.ListTask.Tasks import Tasks
 from modules.ListTask.UI.CreateTaskDialog import CreateTaskDialog
+from modules import HandBook
 
 
 class UI(QDialog):
@@ -60,51 +61,6 @@ class UI(QDialog):
             ]
         }
     
-
-class UnderTaskWidget(QWidget):
-    """
-    Виджет отрисовки подзадач
-
-    new version 2.4.7
-    """
-    @wrapper_widget
-    def __init__(self, under_task):
-        super().__init__()
-
-        p = self.palette()
-        p.setColor(self.backgroundRole(), QColor(255, 200, 0, 127))
-        self.setPalette(p)
-        self.setAutoFillBackground(True)
-        
-        self.btn = QPushButton()
-        self.btn.setFixedSize(QSize(30, 30))
-        self.btn.clicked.connect(self.action_complite_task)
-
-        self.layouts = {
-            "hbox": [
-                QLabel(under_task.task_name),
-                self.btn
-            ]
-        }
-
-    def action_complite_task(self):
-        """
-        Активация завершения задачи
-
-        new version 2.4.7
-        """
-        self.close()
-
-
-class CompliteUnderTaskButton(QPushButton):
-    @wrapper_widget
-    def __init__(self):
-        super().__init__("+")
-
-        #self.config = {
-        #    "size": 30
-        #}
-
 
 class ChangeTaskInfoDialog(UI):
     """
@@ -212,7 +168,9 @@ class ChangeTaskInfoDialog(UI):
             self.under_layout.itemAt(i).widget().deleteLater()
 
         for under_task in list_under_task:
-            self.under_layout.addWidget(UnderTaskWidget(under_task))
+            self.under_layout.addWidget(
+                HandBook.UnderTaskWidget(under_task)
+            )
 
         self.btn_under_task_create = QPushButton("Создать")
         self.under_layout.addWidget(self.btn_under_task_create)

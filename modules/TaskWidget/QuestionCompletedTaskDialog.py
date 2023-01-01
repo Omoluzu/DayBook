@@ -76,7 +76,7 @@ class QuestionCompletedTaskDialog(QDialog):
 
     def action_open_calendar(self):
         """
-        new version 2.3.9
+        new version 2.3.9  
 
         Открытие календаря для изменения даты выполнения текущей задачи
         """

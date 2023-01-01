@@ -56,9 +56,7 @@ class UnderTaskWidget(UI):
 
         new version 2.4.7
         """
-        
         Tasks.set_finished_task(self.under_task.id)
-        # print(self.under_task.id)
         self.close()
 
 

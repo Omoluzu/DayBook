@@ -78,6 +78,18 @@ class Tasks(ORM.ORM):
         return list(get_list_under_task())
 
     @classmethod
+    def set_finished_task(cls, id: int, date_complited = datetime.datetime.now().date()):
+        """
+        Завершения указанной в id задачи
+
+        new version 2.4.7
+        """
+        cls.update_completed_task({
+            "id": id,
+            "date_completed": date_complited
+        })
+
+    @classmethod
     def update_completed_task(cls, data):
         """
         new version 2.3.9
@@ -86,7 +98,7 @@ class Tasks(ORM.ORM):
 
         data = {
             "id": 1,
-            "date_completed": 2021-09-18  # type datetime.now()
+            "date_completed": 2021-09-18  # type datetime.now().date()
         }
         """
         task = cls.databases.query(ORM.Task).filter_by(id=data['id']).one()

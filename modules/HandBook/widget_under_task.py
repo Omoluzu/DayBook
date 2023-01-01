@@ -7,6 +7,8 @@ from PyQt5.QtCore import QSize
 
 from wrapperQWidget5.WrapperWidget import wrapper_widget
 
+from modules.ListTask.Tasks import Tasks
+
 
 class UI(QWidget):
     """
@@ -44,15 +46,19 @@ class UnderTaskWidget(UI):
     """
     def __init__(self, under_task):
         super().__init__()
-        self.btn.clicked.connect(self.action_complite_task)
-        self.label_task_name.setText(under_task.task_name)
+        self.under_task = under_task
+        self.btn.clicked.connect(self.action_completion_task)
+        self.label_task_name.setText(self.under_task.task_name)
 
-    def action_complite_task(self):
+    def action_completion_task(self):
         """
         Активация завершения задачи
 
         new version 2.4.7
         """
+        
+        Tasks.set_finished_task(self.under_task.id)
+        # print(self.under_task.id)
         self.close()
 
 

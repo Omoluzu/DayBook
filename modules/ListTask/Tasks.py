@@ -73,14 +73,18 @@ class Tasks(ORM.ORM):
         def get_list_under_task():
             for link in cls.databases.query(ORM.LinkTask).filter_by(task_id=task_id).all():
                 under_task = cls.get_task_by_id(link.under_task_id)
-                yield under_task
+                if not under_task.completed:
+                    yield under_task
 
         return list(get_list_under_task())
 
     @classmethod
-    def set_finished_task(cls, id: int, date_complited = datetime.datetime.now().date()):
+    def set_finished_task(cls, id: int, date_complited: datetime.datetime = datetime.datetime.now().date()):
         """
         Завершения указанной в id задачи
+
+        ::id: int - Номер задачи из базы данных
+        ::date_complited: datetime.datetime - дата завершения задачи
 
         new version 2.4.7
         """

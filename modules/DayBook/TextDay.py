@@ -4,19 +4,19 @@
 import os
 import datetime
 import configparser
-import argparse
+# import argparse
 from pathlib import Path
 
 
-parser = argparse.ArgumentParser(description="DayBook")
-parser.add_argument('-d', '--dev', action='store_true')
-args = parser.parse_args()
+# parser = argparse.ArgumentParser(description="DayBook")
+# parser.add_argument('-d', '--dev', action='store_true')
+# args = parser.parse_args()
 
-if args.dev:
-    FILE_CONFIG = "settings.ini"
-else:
-    PATH_CONFIG = os.path.join(Path.home(), "DayBook")
-    FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
+# if args.dev:
+#     FILE_CONFIG = "settings.ini"
+# else:
+PATH_CONFIG = os.path.join(Path.home(), "DayBook")
+FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
 
 DICT_MONTH = {
     1: {

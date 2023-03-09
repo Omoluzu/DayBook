@@ -6,6 +6,7 @@
 """
 
 import os
+# import argparse
 import configparser
 
 from pathlib import Path
@@ -15,9 +16,21 @@ from modules.settings import MAIN
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
 
-if os.path.isfile("history.md"):  # Для удобства разработка, чтобы конфигурационный файл был отдельно
-    PATH_CONFIG = os.path.abspath(os.curdir)
-    FILE_CONFIG = "settings.ini"
+# parser = argparse.ArgumentParser(description="DayBook")
+# parser.add_argument('-d', '--dev', action='store_true')
+# args = parser.parse_args()
+
+#print(args.dev)
+# if args.dev:
+#     PATH_CONFIG = os.path.abspath(os.curdir)
+#     FILE_CONFIG = "settings.ini"
+# else:
+# PATH_CONFIG = os.path.join(Path.home(), "DayBook")
+# FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
+
+#if os.path.isfile("history.md"):  # Для удобства разработка, чтобы конфигурационный файл был отдельно
+#    PATH_CONFIG = os.path.abspath(os.curdir)
+#    FILE_CONFIG = "settings.ini"
 
 
 class Config:

@@ -18,7 +18,6 @@ from modules import HandBook
 
 class UI(QDialog):
 
-
     @wrapper_widget
     def __init__(self):
         super().__init__()
@@ -161,7 +160,7 @@ class ChangeTaskInfoDialog(UI):
     def draw_under_task(self, list_under_task):
         """
         Отрисовка виджета задач
- 
+
         new version 2.4.7
         """
         for i in range(self.under_layout.count()):

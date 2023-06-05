@@ -5,9 +5,11 @@
 Виджет редактирования задач
 """
 
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtWidgets import (
+    QDialog, QLineEdit, QTextEdit, QPushButton, QSizePolicy, QWidget, QScrollArea, QVBoxLayout, QShortcut
+)
+from PyQt5.QtGui import QKeySequence
+from PyQt5.QtCore import Qt
 
 from wrapperQWidget5.WrapperWidget import wrapper_widget
 
@@ -75,7 +77,7 @@ class ChangeTaskInfoDialog(UI):
             - Добавленна возможность изменения названия задачи.
         update version 2.4.6
             - Добавлена выджет для описания задачи
-        update version 2,4,7
+        update version 2.4.7
             - Диалог переехал в новую структуру
             - Диалог был переименован с TaskDialog в ChangeTaskInfoDialog
             - Отрисовка графики выведен в отдельный класс
@@ -85,6 +87,15 @@ class ChangeTaskInfoDialog(UI):
 
         self.name_task.setText(self.task.name_task)
         self.notes_task.setText(self.task.notes)
+
+        self.attr = QShortcut(QKeySequence('Alt+w'), self)
+        self.attr.activated.connect(self.action_show_under_task)
+
+        self.attr = QShortcut(QKeySequence('Ctrl+s'), self)
+        self.attr.activated.connect(self.action_save_info_task)
+
+        self.attr = QShortcut(QKeySequence('Alt+n'), self)
+        self.attr.activated.connect(self.action_create_under_task)
 
         self.btn_save.clicked.connect(self.action_save_info_task)
         self.btn_hide.clicked.connect(self.action_show_under_task)
@@ -118,13 +129,13 @@ class ChangeTaskInfoDialog(UI):
 
         if new_task:
             new_under_task = Tasks.create_task(  # Создание новой подзадачи
-                name = new_task.name_task.text(),
-                description = new_task.description.toPlainText(),
-                current_task = False
+                name=new_task.name_task.text(),
+                description=new_task.description.toPlainText(),
+                current_task=False
             ) 
             Tasks.create_link_task(  # Связь текущей задачи с подзадачей
-                task_id = self.task.id_task,
-                under_task_id = new_under_task.id                
+                task_id=self.task.id_task,
+                under_task_id=new_under_task.id
             )
             self.draw_under_task(Tasks.get_under_task(self.task.id_task))
 
@@ -171,7 +182,7 @@ class ChangeTaskInfoDialog(UI):
                 HandBook.UnderTaskWidget(under_task)
             )
 
-        self.btn_under_task_create = QPushButton("Создать")
-        self.under_layout.addWidget(self.btn_under_task_create)
-        self.btn_under_task_create.clicked.connect(self.action_create_under_task)
+        btn_under_task_create = QPushButton("Создать")
+        self.under_layout.addWidget(btn_under_task_create)
+        btn_under_task_create.clicked.connect(self.action_create_under_task)
 

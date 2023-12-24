@@ -4,7 +4,7 @@
 import os
 import sys
 import ctypes
-# import argparse
+import argparse
 # import configparser
 from ico import recource
 
@@ -19,18 +19,19 @@ from modules.Configuration import Config
 import modules
 from versions import info
 
-# parser = argparse.ArgumentParser(description="DayBook")
-# parser.add_argument('-d', '--dev', action='store_true')
-# args = parser.parse_args()
+parser = argparse.ArgumentParser(description="DayBook")
+parser.add_argument('-d', '--dev', action='store_true')
+args = parser.parse_args()
 
-# if args.dev:
-#     FILE_CONFIG = "settings.ini"
-# else:
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
-FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
+
+if args.dev:
+    FILE_CONFIG = "settings.ini"
+else:
+    FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
 
 if sys.platform == "win32":
-    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(f'home.DayBool.{info["version"]}')
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(f'home.DayBook.{info["version"]}')
 
 
 class AppStart(QMainWindow):

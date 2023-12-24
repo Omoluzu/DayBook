@@ -48,9 +48,6 @@ class CurrentTaskWidget(QWidget):
 
     def __init__(self, app):
         """
-
-        update version 2.4.6
-            - Передача информации о Описании задачи в виджет Задачи
         """
         super(CurrentTaskWidget, self).__init__()
 
@@ -61,8 +58,9 @@ class CurrentTaskWidget(QWidget):
 
         for current_task in CurrentTask.get_list_current_task():
             layout.addWidget(TaskWidget.Task(
-                parent=self.task_bar.app, id_task=current_task.id,
-                name_task=current_task.task_name, notes=current_task.description
+                app=self.task_bar.app, id_task=current_task.id,
+                name_task=current_task.task_name,
+                notes=current_task.description, parent_type='current'
             ))
 
         # Кнопка добавления новой задачи

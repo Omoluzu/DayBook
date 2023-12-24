@@ -47,12 +47,6 @@ class TaskWidget(QWidget, ORM.ORM):
 
         При создании задачи происходит добавление нового виджета задачи и
         запись задачи в базу данных
-
-        update version 2.4.1:
-            - Добавлен параметр description
-            - При сохранении задачи в БД, сохраняеться информация о Описании задачи (description)
-        update version 2.4.6
-            - Передача информации о Описании задачи в виджет Задачи
         """
 
         # Добавление задачи в БД
@@ -89,18 +83,15 @@ class TaskWidget(QWidget, ORM.ORM):
 
     def draw_list_task(self):
         """
-        version 2.3.7
-
-        Отрисовка текущих невыполненых задач
-
-        update version 2.4.6:
-            - Передача информации о описании к задачи в виджет задачи
+        Отрисовка текущих не выполненных задач
         """
         for i in range(self.layout.count()):
             self.layout.itemAt(i).widget().deleteLater()
 
         for task in list(Tasks.get_action_task()):
             task_widget = modules.TaskWidget.Task(
-                parent=self.parent, id_task=task.id, name_task=task.task_name, notes=task.description
+                app=self.parent, id_task=task.id,
+                name_task=task.task_name, notes=task.description,
+                parent_type="backlog"
             )
             self.layout.addWidget(task_widget)

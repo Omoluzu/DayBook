@@ -6,31 +6,24 @@
 """
 
 import os
-# import argparse
+import argparse
 import configparser
 
 from pathlib import Path
 
 from modules.settings import MAIN
 
+
+parser = argparse.ArgumentParser(description="DayBook")
+parser.add_argument('-d', '--dev', action='store_true')
+args = parser.parse_args()
+
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
-FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
 
-# parser = argparse.ArgumentParser(description="DayBook")
-# parser.add_argument('-d', '--dev', action='store_true')
-# args = parser.parse_args()
-
-#print(args.dev)
-# if args.dev:
-#     PATH_CONFIG = os.path.abspath(os.curdir)
-#     FILE_CONFIG = "settings.ini"
-# else:
-# PATH_CONFIG = os.path.join(Path.home(), "DayBook")
-# FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
-
-#if os.path.isfile("history.md"):  # Для удобства разработка, чтобы конфигурационный файл был отдельно
-#    PATH_CONFIG = os.path.abspath(os.curdir)
-#    FILE_CONFIG = "settings.ini"
+if args.dev:
+    FILE_CONFIG = "settings.ini"
+else:
+    FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
 
 
 class Config:
@@ -44,7 +37,7 @@ class Config:
 
     def __init__(self):
         self.path_config = PATH_CONFIG  # Путь до места хранения конфигураций
-        self.file_config = os.path.join(self.path_config, FILE_CONFIG)  # Путь до файла конфигурации
+        self.file_config = FILE_CONFIG
 
         self.config = configparser.ConfigParser()
         self.config.read(self.file_config)

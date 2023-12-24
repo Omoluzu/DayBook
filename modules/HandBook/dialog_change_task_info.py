@@ -6,7 +6,8 @@
 """
 
 from PyQt5.QtWidgets import (
-    QDialog, QLineEdit, QTextEdit, QPushButton, QSizePolicy, QWidget, QScrollArea, QVBoxLayout, QShortcut
+    QDialog, QLineEdit, QTextEdit, QPushButton, QSizePolicy, QWidget,
+    QScrollArea, QVBoxLayout, QShortcut
 )
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtCore import Qt

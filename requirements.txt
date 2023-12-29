@@ -1,5 +1,5 @@
-pip==23.1.2
-setuptools==67.8.0
-PyQt5==5.15.9
-sqlalchemy==1.4.42
-pyinstaller==5.11.0
+pip==23.3.2
+PyQt5==5.15.10
+sqlalchemy==2.0.24
+setuptools==69.0.3
+pyinstaller==6.3.0

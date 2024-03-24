@@ -5,7 +5,10 @@ import os
 import datetime
 import configparser
 
-from PyQt5.QtWidgets import QFileDialog, QWidget, QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton, QLabel, QCalendarWidget
+from PyQt5.QtWidgets import (
+    QFileDialog, QWidget, QVBoxLayout, QHBoxLayout,
+    QLineEdit, QPushButton, QLabel, QCalendarWidget
+)
 
 
 def create_option_config(file_config, section, option, key):

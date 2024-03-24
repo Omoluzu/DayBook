@@ -10,11 +10,13 @@
 import datetime
 import sqlalchemy.exc
 
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
+from PyQt5.QtCore import Qt
+from typing import Iterable
 
 from modules import ORM
 from modules.ListTask import Tasks
+
 import modules
 
 
@@ -67,21 +69,27 @@ class TaskWidget(QWidget, ORM.ORM):
 
             # Создаем виджет задачи и добавлего для отображения
             task = modules.TaskWidget.Task(
-                parent=self.parent, id_task=last_id_task.id, name_task=name_task, notes=description
+                app=self.parent,
+                id_task=last_id_task.id,
+                name_task=name_task,
+                notes=description,
+                parent_type=''
             )
             self.layout.addWidget(task)
 
     @classmethod
-    def get_action_task(cls) -> list:
-        """
-        Возврат списка активных задач
+    def get_action_task(cls) -> Iterable[int]:
+        """Возврат списка активных задач
+
+        Returns:
+            Генератор ИД не выполненных задач
         """
 
         for task in cls.databases.query(ORM.Task).all():
             if not task.completed:
                 yield task.id
 
-    def draw_list_task(self):
+    def draw_list_task(self) -> None:
         """
         Отрисовка текущих не выполненных задач
         """

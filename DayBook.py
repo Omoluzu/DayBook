@@ -8,7 +8,7 @@ import argparse
 # import configparser
 from ico import recource
 
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QMainWindow, QDesktopWidget, QTabWidget, QHBoxLayout, QWidget, QShortcut, QApplication
 from PyQt5.QtGui import QKeySequence, QIcon
 from pathlib import Path
 
@@ -26,21 +26,17 @@ args = parser.parse_args()
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 
 if args.dev:
-    FILE_CONFIG = "settings.ini"
+    file_config = "settings.ini"
 else:
-    FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
+    file_config = os.path.join(PATH_CONFIG, "settings.ini")
 
 if sys.platform == "win32":
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(f'home.DayBook.{info["version"]}')
 
 
 class AppStart(QMainWindow):
-    def __init__(self):
-        """
-
-        update version 2.4.5:
-            - current_task -> self.current_task
-        """
+    def __init__(self) -> None:
+        """"""
         super().__init__()
 
         self.setWindowTitle(f"DayBook {info['version']}")
@@ -53,7 +49,7 @@ class AppStart(QMainWindow):
 
         self.setGeometry(self.indent_width, 50, 800, 800)
 
-        self.gui_settings = SettingsWidget(parent=self, file_config=FILE_CONFIG)  # Окно настроек
+        self.gui_settings = SettingsWidget(parent=self, file_config=file_config)  # Окно настроек
         self.gui_about = modules.AboutWidget(parent=self)  # Окно о программе
 
         # Виджеты ТабВиджетов
@@ -63,18 +59,18 @@ class AppStart(QMainWindow):
 
         # ТабВиджет
         self.t_bar = QTabWidget()
-        self.t_bar.setTabPosition(QTabWidget.West)
+        self.t_bar.setTabPosition(QTabWidget.TabPosition.West)
         self.t_bar.addTab(self.day_book, "Дневник")
         self.t_bar.addTab(self.current_task, "Текущая задача")
         self.t_bar.addTab(self.task, "Список задачи")
 
         # Layout
-        self.layout = QHBoxLayout()
-        self.layout.addWidget(self.t_bar)
+        self.layer = QHBoxLayout()
+        self.layer.addWidget(self.t_bar)
 
         # Widget
         self.widget = QWidget()
-        self.widget.setLayout(self.layout)
+        self.widget.setLayout(self.layer)
         self.setCentralWidget(self.widget)
 
         # Menu
@@ -96,10 +92,12 @@ class AppStart(QMainWindow):
         """
         version 2.3.7
 
-        Обновление списка выполненых задач.
+        Обновление списка выполненных задач.
         """
-        self.day_book.update_completed_task()  # Обновляем список выполненых задач. На странице дневника
-        self.task.task.draw_list_task()  # Обновление списка невыполненых задач в представлении "Список задач"
+        # Обновляем список выполненных задач. На странице дневника
+        self.day_book.update_completed_task()
+         # Обновление списка невыполненных задач в представлении "Список задач"
+        self.task.task.draw_list_task()
 
 
 if __name__ == "__main__":

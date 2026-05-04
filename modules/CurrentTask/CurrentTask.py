@@ -7,7 +7,7 @@
 """
 
 
-from modules import *
+from modules import ORM
 from modules.ListTask import Tasks
 
 
@@ -35,7 +35,7 @@ class CurrentTask(ORM.ORM):
                     yield task  # Возвращаем задачу
 
     @classmethod
-    def deleted_current_task_by_id(cls, id_current_task):
+    def deleted_current_task_by_id(cls, id_current_task: int) -> None:
         """
         Удаление связи из БД
         """
@@ -43,7 +43,7 @@ class CurrentTask(ORM.ORM):
         cls.databases.commit()
 
     @classmethod
-    def add_current_task(cls, id_task):
+    def add_current_task(cls, id_task: int) -> None:
         """
         Добавление новой задачи в БД текущих задач
         """

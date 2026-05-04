@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from sqlalchemy import *
+from sqlalchemy import (
+    Column, Integer, String, DATE, Boolean, Text, ForeignKey, create_engine)
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -18,7 +19,9 @@ class Task(DeclarativeBase):
     completed = Column(Boolean)  # Пометка об выполнении задачи
     date_completed = Column(DATE)  # Дата завершения задачи
     description = Column(Text)  # Описание задачи
-    current_task = Column(Boolean, default=True)  # Пометка о том что текущую задачу можно выводить в представлении "Список задач"
+    # Пометка о том что текущую задачу можно выводить в представлении
+    # "Список задач"
+    current_task = Column(Boolean, default=True)
 
 
 class RandomTask(DeclarativeBase):
@@ -53,4 +56,3 @@ class ORM:
 
 if __name__ == "__main__":
     ORM()
-

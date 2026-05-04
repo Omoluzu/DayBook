@@ -8,11 +8,11 @@
 """
 
 import datetime
-import sqlalchemy.exc
-
-from PyQt5.QtWidgets import QWidget, QVBoxLayout
-from PyQt5.QtCore import Qt
 from typing import Iterable
+
+import sqlalchemy.exc
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
 
 from modules import ORM
 from modules.ListTask import Tasks
@@ -24,22 +24,21 @@ class TaskWidget(QWidget, ORM.ORM):
     """
     Виджет вывода списка всех задач
     """
-    parent: 'AppStart'  # Основное приложение для связи
-    layout: QVBoxLayout  # Основной лайоут для задач
-
-    def __init__(self, parent):
+    def __init__(self, parent: 'AppStart') -> None:
         super().__init__()
 
         self.parent = parent
+        """Родительский виджет"""
 
         self.setAutoFillBackground(True)
 
         p = self.palette()
-        p.setColor(self.backgroundRole(), Qt.white)
+        p.setColor(self.backgroundRole(), Qt.GlobalColor.white)
         self.setPalette(p)
 
-        self.layout = QVBoxLayout(self)
-        self.layout.setAlignment(Qt.AlignTop)
+        self.layer = QVBoxLayout(self)
+        """Основной слой для задач"""
+        self.layer.setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.draw_list_task()
 
@@ -75,7 +74,7 @@ class TaskWidget(QWidget, ORM.ORM):
                 notes=description,
                 parent_type=''
             )
-            self.layout.addWidget(task)
+            self.layer.addWidget(task)
 
     @classmethod
     def get_action_task(cls) -> Iterable[int]:
@@ -93,8 +92,8 @@ class TaskWidget(QWidget, ORM.ORM):
         """
         Отрисовка текущих не выполненных задач
         """
-        for i in range(self.layout.count()):
-            self.layout.itemAt(i).widget().deleteLater()
+        for i in range(self.layer.count()):
+            self.layer.itemAt(i).widget().deleteLater()
 
         for task in list(Tasks.get_action_task()):
             task_widget = modules.TaskWidget.Task(
@@ -102,4 +101,4 @@ class TaskWidget(QWidget, ORM.ORM):
                 name_task=task.task_name, notes=task.description,
                 parent_type="backlog"
             )
-            self.layout.addWidget(task_widget)
+            self.layer.addWidget(task_widget)

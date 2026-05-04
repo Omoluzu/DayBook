@@ -5,7 +5,7 @@
 Головной виджет задач
 """
 
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QScrollArea, QSpacerItem, QSizePolicy, QPushButton
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QIcon
 
@@ -13,6 +13,7 @@ import modules
 
 
 class TaskBar(QWidget):
+    """Список задач"""
     parent: 'AppStart'
 
     def __init__(self, parent):
@@ -37,8 +38,8 @@ class TaskBar(QWidget):
         self.setLayout(layout)
 
     @staticmethod
-    def action_select_random_task():
-        """ Выбор рандомной задачи """
+    def action_select_random_task() -> None:
+        """Выбор случайной задачи """
 
         random_task_widget = modules.Task.UI.RandomTaskDialog()
         random_task_widget.exec_()
@@ -75,10 +76,10 @@ class ButtonCreateTask(QPushButton):
         self.clicked.connect(self.action_create_task)
 
     def action_create_task(self):
-        """ 
-        Создание новой задачи 
+        """
+        Создание новой задачи
 
-        updade version 2.4.7
+        update version 2.4.7
             - В текущий метод вынесено создание задачи
             - Удалено передача в класс CreateTaskDialog параметра self.task_bar
         """

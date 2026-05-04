@@ -10,7 +10,7 @@ import random
 import datetime
 import sqlalchemy.exc
 
-from modules import *
+from modules import ORM
 
 
 class Tasks(ORM.ORM):
@@ -18,7 +18,7 @@ class Tasks(ORM.ORM):
     @classmethod
     def get_day_complete_task(cls, day: datetime = datetime.datetime.today()) -> list:
         """
-        Получение выполненых задач в указаный день
+        Получение выполненных задач в указанный день
         """
         try:
             return cls.databases.query(ORM.Task).filter_by(date_completed=day.date()).all()
@@ -157,15 +157,26 @@ class Tasks(ORM.ORM):
         return new_task
 
     @classmethod
-    def create_link_task(cls, task_id, under_task_id):
+    def create_link_task(cls, task_id: int, under_task_id: int) -> None:
         """
         Создание связей для задач
 
-        new version 2.4.7  
+        new version 2.4.7
         """
 
         cls.databases.add(ORM.LinkTask(
-            task_id = task_id,
-            under_task_id = under_task_id
+            task_id=task_id,
+            under_task_id=under_task_id
         ))
+        cls.databases.commit()
+
+    @classmethod
+    def delete_task(cls, task_id: int) -> None:
+        """Удаление задачи
+
+        Args:
+            task_id (int): ИД задачи
+        """
+        task = cls.databases.query(ORM.Task).filter_by(id=task_id).one()
+        cls.databases.delete(task)
         cls.databases.commit()

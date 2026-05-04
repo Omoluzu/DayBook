@@ -51,7 +51,7 @@ class Tasks(ORM.ORM):
     @classmethod
     def get_random_task(cls):
         """
-        Возврат рандомной задачи из списка невыполненых задач
+        Возврат случайной задачи из списка невыполненных задач
         """
         from modules.CurrentTask import CurrentTask
 

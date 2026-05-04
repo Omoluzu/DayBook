@@ -1,6 +1,7 @@
-from modules.ListTask.UI.TaskBar import TaskBar
-from modules.ListTask.UI.TaskWidget import TaskWidget
-from modules.ListTask.UI.CreateTaskDialog import CreateTaskDialog
+from .TaskBar import TaskBar
+from .TaskWidget import TaskWidget
+from .ControlPanel import TaskMenuWidget
+from .CreateTaskDialog import CreateTaskDialog
 
 
-__all__ = ("TaskBar", "TaskWidget", "CreateTaskDialog")
+__all__ = ("TaskBar", "TaskWidget", "CreateTaskDialog", "TaskMenuWidget")

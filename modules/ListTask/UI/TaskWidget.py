@@ -8,7 +8,7 @@
 """
 
 import datetime
-from typing import Iterable
+from typing import Iterable, Optional
 
 import sqlalchemy.exc
 from PyQt5.QtCore import Qt
@@ -42,12 +42,15 @@ class TaskWidget(QWidget, ORM.ORM):
 
         self.draw_list_task()
 
-    def create_task(self, name_task, description):
+    def create_task(self, name_task: str, description: str) -> Optional[int]:
         """
         Создание новой задачи.
 
         При создании задачи происходит добавление нового виджета задачи и
         запись задачи в базу данных
+
+        Returns:
+            int: ID созданной задачи
         """
 
         # Добавление задачи в БД
@@ -66,7 +69,7 @@ class TaskWidget(QWidget, ORM.ORM):
             # Получение последнего ИД (решения вопроса с получение ИД задачи)
             last_id_task = self.databases.query(ORM.Task).order_by(ORM.Task.id.desc()).first()
 
-            # Создаем виджет задачи и добавлего для отображения
+            # Создаем виджет задачи и добавляем его для отображения
             task = modules.TaskWidget.Task(
                 app=self.parent,
                 id_task=last_id_task.id,
@@ -75,6 +78,7 @@ class TaskWidget(QWidget, ORM.ORM):
                 parent_type=''
             )
             self.layer.addWidget(task)
+            return last_id_task.id
 
     @classmethod
     def get_action_task(cls) -> Iterable[int]:

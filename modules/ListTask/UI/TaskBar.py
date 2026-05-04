@@ -4,76 +4,38 @@
 """
 Головной виджет задач
 """
+from typing import TYPE_CHECKING
 
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QScrollArea, QSpacerItem, QSizePolicy, QPushButton
-from PyQt5.QtCore import QSize
-from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QScrollArea
 
 import modules
 
 
+if TYPE_CHECKING:
+    from DayBook import AppStart
+
+
 class TaskBar(QWidget):
     """Список задач"""
-    parent: 'AppStart'
 
-    def __init__(self, parent):
+    def __init__(self, parent: "AppStart") -> None:
         super().__init__()
 
         layout = QVBoxLayout()
 
-        menu = TaskMenuWidget(task_bar=self)  # Меню вджетов
+        menu = modules.ListTask.UI.TaskMenuWidget()  # Меню виджетов
+        menu.createTaskSignal.connect(self.action_create_task)
+
         self.task = modules.ListTask.UI.TaskWidget(parent=parent)  # Виджет вывода задач
 
         scroll = QScrollArea()
         scroll.setWidget(self.task)
         scroll.setWidgetResizable(True)
 
-        # random_task = QPushButton("Рандомная задача")
-        # random_task.clicked.connect(self.action_select_random_task)
-
         layout.addWidget(menu)
         layout.addWidget(scroll)
-        # layout.addWidget(random_task)
 
         self.setLayout(layout)
-
-    @staticmethod
-    def action_select_random_task() -> None:
-        """Выбор случайной задачи """
-
-        random_task_widget = modules.Task.UI.RandomTaskDialog()
-        random_task_widget.exec_()
-
-
-class TaskMenuWidget(QWidget):
-
-    def __init__(self, task_bar):
-        super().__init__()
-
-        layout = QVBoxLayout()
-        self.setLayout(layout)
-        layout.setContentsMargins(0, 0, 0, 0)
-
-        space = QSpacerItem(0, 0, QSizePolicy.Minimum)
-
-        create_task = ButtonCreateTask(task_bar=task_bar)
-        layout.addWidget(create_task)
-        layout.addItem(space)
-
-
-class ButtonCreateTask(QPushButton):
-
-    def __init__(self, task_bar):
-        super().__init__()
-
-        self.task_bar = task_bar
-
-        self.setIcon(QIcon(":/create_task.png"))
-        self.setIconSize(QSize(50, 50))
-        self.setFixedSize(QSize(50, 50))
-        self.setFlat(True)
-
-        self.clicked.connect(self.action_create_task)
 
     def action_create_task(self):
         """
@@ -87,7 +49,7 @@ class ButtonCreateTask(QPushButton):
         create_task = modules.ListTask.UI.CreateTaskDialog()
         create_task.exec_()
         if create_task:
-            self.task_bar.task.create_task(
+            self.task.create_task(
                 name_task=create_task.name_task.text(),
                 description=create_task.description.toPlainText()
             )

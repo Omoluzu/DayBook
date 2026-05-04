@@ -4,7 +4,7 @@
 import os
 import sys
 import ctypes
-import argparse
+# import argparse
 # import configparser
 from ico import recource
 
@@ -19,16 +19,16 @@ from modules.Configuration import Config
 import modules
 from versions import info
 
-parser = argparse.ArgumentParser(description="DayBook")
-parser.add_argument('-d', '--dev', action='store_true')
-args = parser.parse_args()
+# parser = argparse.ArgumentParser(description="DayBook")
+# parser.add_argument('-d', '--dev', action='store_true')
+# args = parser.parse_args()
 
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 
-if args.dev:
-    file_config = "settings.ini"
-else:
-    file_config = os.path.join(PATH_CONFIG, "settings.ini")
+# if args.dev:
+#     file_config = "settings.ini"
+# else:
+file_config = os.path.join(PATH_CONFIG, "settings.ini")
 
 if sys.platform == "win32":
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(f'home.DayBook.{info["version"]}')

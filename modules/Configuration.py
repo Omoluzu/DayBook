@@ -6,7 +6,7 @@
 """
 
 import os
-import argparse
+# import argparse
 import configparser
 
 from pathlib import Path
@@ -14,16 +14,16 @@ from pathlib import Path
 from modules.settings import MAIN
 
 
-parser = argparse.ArgumentParser(description="DayBook")
-parser.add_argument('-d', '--dev', action='store_true')
-args = parser.parse_args()
+# parser = argparse.ArgumentParser(description="DayBook")
+# parser.add_argument('-d', '--dev', action='store_true')
+# args = parser.parse_args()
 
 PATH_CONFIG = os.path.join(Path.home(), "DayBook")
 
-if args.dev:
-    FILE_CONFIG = "settings.ini"
-else:
-    FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
+# if args.dev:
+#     FILE_CONFIG = "settings.ini"
+# else:
+FILE_CONFIG = os.path.join(PATH_CONFIG, "settings.ini")
 
 
 class Config:

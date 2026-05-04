@@ -1,8 +1,9 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
+from datetime import datetime
 
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
 from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
 
 from ico import recource
 
@@ -20,15 +21,15 @@ class AboutWidget(QWidget):
         self.setGeometry(600, 200, 350, 100)
         self.setWindowIcon(QIcon(":/day_book.png"))
 
-        self.layout = QVBoxLayout()
+        self.layer = QVBoxLayout()
 
         self.label_name_project = QLabel("ДНЕВНИК")
-        self.layout.addWidget(self.label_name_project)
+        self.layer.addWidget(self.label_name_project)
 
         self.label_version = QLabel(f'Версия программы: {info["version"]}')
-        self.layout.addWidget(self.label_version)
+        self.layer.addWidget(self.label_version)
 
-        self.label_copyright = QLabel("Copyright: \xa9 2020-2021 Волков Алексей")
-        self.layout.addWidget(self.label_copyright)
+        self.label_copyright = QLabel(f"Copyright: \xa9 2020-{datetime.now().year} Волков Алексей")
+        self.layer.addWidget(self.label_copyright)
 
-        self.setLayout(self.layout)
+        self.setLayout(self.layer)

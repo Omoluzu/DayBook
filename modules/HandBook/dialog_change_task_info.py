@@ -4,25 +4,26 @@
 """
 Виджет редактирования задач
 """
+from typing import TYPE_CHECKING
 
 from PyQt5.QtWidgets import (
     QDialog, QLineEdit, QTextEdit, QPushButton, QSizePolicy, QWidget,
-    QScrollArea, QVBoxLayout, QShortcut
+    QScrollArea, QVBoxLayout, QShortcut, QHBoxLayout
 )
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtCore import Qt
-
-from wrapperQWidget5.WrapperWidget import wrapper_widget
 
 from modules.ListTask.Tasks import Tasks
 from modules.ListTask.UI.CreateTaskDialog import CreateTaskDialog
 from modules import HandBook
 
 
-class UI(QDialog):
+if TYPE_CHECKING:
+    from modules.TaskWidget import Task
 
-    @wrapper_widget
-    def __init__(self):
+
+class UI(QDialog):
+    def __init__(self) -> None:
         super().__init__()
 
         self.setFixedSize(304, 415)
@@ -33,36 +34,31 @@ class UI(QDialog):
         self.btn_save = QPushButton("Сохранить")
 
         self.btn_hide = QPushButton(">")
-        self.btn_hide.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Minimum)
+        self.btn_hide.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
         self.btn_hide.setMaximumWidth(20)
 
         self.under_task_widget = QWidget()
 
-        self.scroll = QScrollArea()
-        self.scroll.setFixedSize(434, 415)
-        self.scroll.setVisible(False)
-        self.scroll.setWidget(self.under_task_widget)
-        self.scroll.setWidgetResizable(True)
+        self.scroll_area = QScrollArea()
+        self.scroll_area.setFixedSize(434, 415)
+        self.scroll_area.setVisible(False)
+        self.scroll_area.setWidget(self.under_task_widget)
+        self.scroll_area.setWidgetResizable(True)
 
         self.under_layout = QVBoxLayout(self.under_task_widget)
-        self.under_layout.setAlignment(Qt.AlignTop)
+        self.under_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
 
-        self.layouts = {
-            "hbox": [
-                {"config": {
-                    "margin": 0
-                }},
+        self.main_vbox = QVBoxLayout()
+        self.main_vbox.addWidget(self.name_task)
+        self.main_vbox.addWidget(self.notes_task)
+        self.main_vbox.addWidget(self.btn_save)
 
-                {"vbox": [
-                    self.name_task,
-                    self.notes_task,
-                    self.btn_save
-                ]},
-                self.btn_hide,
-                self.scroll
-            ]
-        }
-    
+        self.layer = QHBoxLayout(self)
+        self.layer.setContentsMargins(0,0,0,0)
+        self.layer.addLayout(self.main_vbox)
+        self.layer.addWidget(self.btn_hide)
+        self.layer.addWidget(self.scroll_area)
+
 
 class ChangeTaskInfoDialog(UI):
     """
@@ -112,11 +108,11 @@ class ChangeTaskInfoDialog(UI):
         """
         if self.btn_hide.text() == ">":
             self.setFixedSize(744, 415)
-            self.scroll.setVisible(True)
+            self.scroll_area.setVisible(True)
             self.btn_hide.setText("<")
         else:
             self.setFixedSize(304, 415)
-            self.scroll.setVisible(False)
+            self.scroll_area.setVisible(False)
             self.btn_hide.setText(">")
 
     def action_create_under_task(self):
@@ -133,7 +129,7 @@ class ChangeTaskInfoDialog(UI):
                 name=new_task.name_task.text(),
                 description=new_task.description.toPlainText(),
                 current_task=False
-            ) 
+            )
             Tasks.create_link_task(  # Связь текущей задачи с подзадачей
                 task_id=self.task.id_task,
                 under_task_id=new_under_task.id
@@ -164,8 +160,8 @@ class ChangeTaskInfoDialog(UI):
 
         Tasks.update_info_task(data)  # Обновление информации в базе данных
 
-        self.task.parent.task.task.draw_list_task()  # Обновление списка задач в представление "Список задач"
-        self.task.parent.current_task.show_task()  # Обновление списка задач в представление "Текущая задача"
+        self.task.app.task.task.draw_list_task()  # Обновление списка задач в представление "Список задач"
+        self.task.app.current_task.show_task()  # Обновление списка задач в представление "Текущая задача"
 
         self.close()
 
@@ -186,4 +182,3 @@ class ChangeTaskInfoDialog(UI):
         btn_under_task_create = QPushButton("Создать")
         self.under_layout.addWidget(btn_under_task_create)
         btn_under_task_create.clicked.connect(self.action_create_under_task)
-
